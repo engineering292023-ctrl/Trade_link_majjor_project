@@ -1,0 +1,29 @@
+# Netlify Deployment Configuration for TradeLink Frontend
+
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+
+[[redirects]]
+  from = "/"
+  to = "/TradeLink/seller-portal/index.html"
+  status = 302
+
+[[redirects]]
+  from = "/seller"
+  to = "/TradeLink/seller-portal/index.html"
+  status = 302
+
+[[redirects]]
+  from = "/merchant"
+  to = "/TradeLink/merchant-portal/index.html"
+  status = 302
+
+[[redirects]]
+  from = "/admin"
+  to = "/admin-portal/index.html"
+  status = 302
