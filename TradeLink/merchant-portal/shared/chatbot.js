@@ -274,15 +274,17 @@
     const isAppShellVisible = appShell && window.getComputedStyle(appShell).display !== 'none';
     const loginShell = document.querySelector('.login-shell');
     const isLoginShellHidden = loginShell && window.getComputedStyle(loginShell).display === 'none';
+    const hasActiveScreen = !!document.querySelector('.screen.active');
+    const hasUserSession = !!(window.currentUser || (window.firebaseAuth && window.firebaseAuth.currentUser) || localStorage.getItem('tl_user') || localStorage.getItem('tradelink_user'));
 
-    const isLoggedIn = isBodyAppVisible || (isAppShellVisible && isLoginShellHidden);
+    const isLoggedIn = isBodyAppVisible || (isAppShellVisible && isLoginShellHidden) || (isAppShellVisible && (hasActiveScreen || hasUserSession));
 
     if (isLoggedIn) {
       container.classList.add('tl-visible');
-      container.style.display = 'block';
+      container.style.setProperty('display', 'block', 'important');
     } else {
       container.classList.remove('tl-visible');
-      container.style.display = 'none';
+      container.style.setProperty('display', 'none', 'important');
       if (isWindowOpen) {
         setWindowOpen(false);
       }

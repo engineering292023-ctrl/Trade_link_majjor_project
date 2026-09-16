@@ -20,7 +20,7 @@
 body.app-visible #tl-ai-container,
 .app-visible #tl-ai-container,
 #tl-ai-container.tl-visible {
-  display: block;
+  display: block !important;
 }
 
 /* Floating Trigger Button */
