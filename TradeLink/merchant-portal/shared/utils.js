@@ -340,7 +340,23 @@ function calcVolume(l, w, h) {
  *
  * Change this ONE line when you deploy.
  */
-var API_BASE_URL = 'http://localhost:8000/api';
+var API_BASE_URL = (function() {
+  if (typeof window.ENV_CONFIG !== 'undefined' && window.ENV_CONFIG && window.ENV_CONFIG.BACKEND_URL) {
+    return window.ENV_CONFIG.BACKEND_URL.replace(/\/+$/, '') + '/api';
+  }
+  if (typeof window.__ENV__ !== 'undefined' && window.__ENV__ && window.__ENV__.BACKEND_URL) {
+    return window.__ENV__.BACKEND_URL.replace(/\/+$/, '') + '/api';
+  }
+  if (typeof window.API_BASE === 'string' && window.API_BASE) {
+    return window.API_BASE.replace(/\/+$/, '');
+  }
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    return 'http://localhost:8000/api';
+  }
+  return '/api';
+})();
+window.API_BASE = API_BASE_URL;
+window.API_BASE_URL = API_BASE_URL;
 
 /**
  * getAuthToken()  Promise<string>

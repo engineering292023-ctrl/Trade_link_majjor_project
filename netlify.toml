@@ -1,7 +1,8 @@
 # Netlify Deployment Configuration for TradeLink Frontend
 
 [build]
-  publish = "."
+  command = "node build-frontend.js"
+  publish = "dist"
 
 [[headers]]
   for = "/*"
@@ -27,3 +28,10 @@
   from = "/admin"
   to = "/admin-portal/index.html"
   status = 302
+
+# Block direct access to any backend routes on frontend domain
+[[redirects]]
+  from = "/backend/*"
+  to = "/404.html"
+  status = 404
+  force = true

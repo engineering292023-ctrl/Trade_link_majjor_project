@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,12 @@
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
 
   <!-- Leaflet -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <!-- Razorpay -->
@@ -40,104 +43,203 @@
   <style>
     /* aaa Grid backgrounds drawn once here aaa */
     .login-shell-grid {
-      position:absolute;inset:0;
+      position: absolute;
+      inset: 0;
       background-image:
-        linear-gradient(rgba(30,45,61,.45) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(30,45,61,.45) 1px, transparent 1px);
-      background-size:48px 48px;
-      pointer-events:none;
-      z-index:1;
+        linear-gradient(rgba(30, 45, 61, .45) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30, 45, 61, .45) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 1;
     }
 
     /* Floating particles on login */
     .login-particle {
-      position:absolute;border-radius:50%;
-      animation:particle-float linear infinite;
-      pointer-events:none;z-index:2;
-      opacity:.35;
+      position: absolute;
+      border-radius: 50%;
+      animation: particle-float linear infinite;
+      pointer-events: none;
+      z-index: 2;
+      opacity: .35;
     }
+
     @keyframes particle-float {
-      0%   { transform:translateY(0) rotate(0deg); opacity:.35; }
-      50%  { opacity:.6; }
-      100% { transform:translateY(-100vh) rotate(360deg); opacity:0; }
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: .35;
+      }
+
+      50% {
+        opacity: .6;
+      }
+
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+      }
     }
 
     /* Upload progress bar inside upload zone */
     .upload-pbar-wrap {
-      height:3px;background:var(--bg-border-2);border-radius:2px;
-      margin-top:10px;overflow:hidden;display:none;
+      height: 3px;
+      background: var(--bg-border-2);
+      border-radius: 2px;
+      margin-top: 10px;
+      overflow: hidden;
+      display: none;
     }
+
     .upload-pbar {
-      height:100%;width:0;
-      background:linear-gradient(90deg,var(--brand-600),var(--brand-400));
-      border-radius:2px;
-      transition:width .2s linear;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--brand-600), var(--brand-400));
+      border-radius: 2px;
+      transition: width .2s linear;
     }
-    .upload-zone.uploading .upload-pbar-wrap { display:block; }
+
+    .upload-zone.uploading .upload-pbar-wrap {
+      display: block;
+    }
 
     /* Status message bar (inline beneath buttons) */
     .status-bar {
-      display:none;align-items:center;gap:10px;
-      padding:10px 14px;border-radius:var(--r-sm);
-      font-size:13px;margin-top:12px;
-      animation:banner-in .2s ease;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: var(--r-sm);
+      font-size: 13px;
+      margin-top: 12px;
+      animation: banner-in .2s ease;
     }
-    .status-bar.active { display:flex; }
-    .status-bar.loading { background:var(--info-bg);border:1px solid var(--info-border);color:var(--info); }
-    .status-bar.success { background:var(--success-bg);border:1px solid var(--success-border);color:var(--brand-400); }
-    .status-bar.error   { background:var(--danger-bg);border:1px solid var(--danger-border);color:#fca5a5; }
-    .status-bar.warning { background:var(--warning-bg);border:1px solid var(--warning-border);color:var(--warning); }
+
+    .status-bar.active {
+      display: flex;
+    }
+
+    .status-bar.loading {
+      background: var(--info-bg);
+      border: 1px solid var(--info-border);
+      color: var(--info);
+    }
+
+    .status-bar.success {
+      background: var(--success-bg);
+      border: 1px solid var(--success-border);
+      color: var(--brand-400);
+    }
+
+    .status-bar.error {
+      background: var(--danger-bg);
+      border: 1px solid var(--danger-border);
+      color: #fca5a5;
+    }
+
+    .status-bar.warning {
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      color: var(--warning);
+    }
+
     .status-bar-spinner {
-      width:14px;height:14px;
-      border:2px solid rgba(56,189,248,.3);border-top-color:var(--info);
-      border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0;
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(56, 189, 248, .3);
+      border-top-color: var(--info);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      flex-shrink: 0;
     }
-    .status-bar.success .status-bar-spinner { display:none; }
-    .status-bar.error   .status-bar-spinner { display:none; }
+
+    .status-bar.success .status-bar-spinner {
+      display: none;
+    }
+
+    .status-bar.error .status-bar-spinner {
+      display: none;
+    }
 
     /* Listing photo preview */
     .photo-thumb {
-      width:72px;height:72px;border-radius:var(--r-sm);
-      object-fit:cover;border:2px solid var(--bg-border-2);
-      transition:transform var(--t-fast);
+      width: 72px;
+      height: 72px;
+      border-radius: var(--r-sm);
+      object-fit: cover;
+      border: 2px solid var(--bg-border-2);
+      transition: transform var(--t-fast);
     }
-    .photo-thumb:hover { transform:scale(1.05); }
+
+    .photo-thumb:hover {
+      transform: scale(1.05);
+    }
 
     /* Announcement ribbon */
     .ribbon-bar {
-      background:linear-gradient(90deg,var(--brand-700),var(--brand-600),var(--brand-700));
-      text-align:center;padding:8px 20px;
-      font-size:12px;font-weight:600;color:#d1fae5;
-      letter-spacing:.04em;
+      background: linear-gradient(90deg, var(--brand-700), var(--brand-600), var(--brand-700));
+      text-align: center;
+      padding: 8px 20px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #d1fae5;
+      letter-spacing: .04em;
     }
-    .ribbon-bar a { color:#fff;text-decoration:underline;margin-left:8px; }
+
+    .ribbon-bar a {
+      color: #fff;
+      text-decoration: underline;
+      margin-left: 8px;
+    }
 
     /* Sidebar mobile toggle */
     .mobile-menu-btn {
-      display:none;
-      position:fixed;top:14px;left:14px;z-index:200;
-      min-width:44px;height:36px;padding:0 10px;border-radius:var(--r-sm);
-      background:var(--bg-card);border:1px solid var(--bg-border-2);
-      font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
-      align-items:center;justify-content:center;
-      box-shadow:var(--shadow-sm);
+      display: none;
+      position: fixed;
+      top: 14px;
+      left: 14px;
+      z-index: 200;
+      min-width: 44px;
+      height: 36px;
+      padding: 0 10px;
+      border-radius: var(--r-sm);
+      background: var(--bg-card);
+      border: 1px solid var(--bg-border-2);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-sm);
     }
-    @media(max-width:900px){.mobile-menu-btn{display:flex;}}
+
+    @media(max-width:900px) {
+      .mobile-menu-btn {
+        display: flex;
+      }
+    }
 
     /* Sidebar overlay on mobile */
     .sidebar-overlay {
-      display:none;position:fixed;inset:0;
-      background:rgba(0,0,0,.5);backdrop-filter:blur(2px);
-      z-index:99;
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .5);
+      backdrop-filter: blur(2px);
+      z-index: 99;
     }
-    .sidebar-overlay.active { display:block; }
+
+    .sidebar-overlay.active {
+      display: block;
+    }
   </style>
 </head>
+
 <body class="portal portal-seller">
 
-<div class="page">
+  <div class="page">
 
-  <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
        LOGIN SHELL
     @media(max-width:900px){.mobile-menu-btn{display:flex;}}
 
@@ -157,1302 +259,1415 @@
   <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
        LOGIN SHELL
        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
-  <div class="login-shell seller-bg" id="login-shell">
-    <div class="login-shell-grid"></div>
-    <div id="particles-wrap"></div>
+    <div class="login-shell seller-bg" id="login-shell">
+      <div class="login-shell-grid"></div>
+      <div id="particles-wrap"></div>
 
-    <div class="auth-shell">
-      <div class="login-card">
-        <div class="login-brand" style="margin-bottom: 24px;">
-          <div class="login-logo">TL</div>
-          <div>
-            <div class="login-brand-name">TradeLink</div>
-            <div class="login-brand-tag">Seller Portal</div>
+      <div class="auth-shell">
+        <div class="login-card">
+          <div class="login-brand" style="margin-bottom: 24px;">
+            <div class="login-logo">TL</div>
+            <div>
+              <div class="login-brand-name">TradeLink</div>
+              <div class="login-brand-tag">Seller Portal</div>
+            </div>
           </div>
-        </div>
 
-        <div class="auth-panel-head">
-          <div>
-            <h1 class="login-heading">Welcome back</h1>
-            <p class="login-subtext">
-              Sign in to manage your listings, bids, deals, and payouts.
+          <div class="auth-panel-head">
+            <div>
+              <h1 class="login-heading">Welcome back</h1>
+              <p class="login-subtext">
+                Sign in to manage your listings, bids, deals, and payouts.
+              </p>
+            </div>
+            <div class="auth-chip">Seller</div>
+          </div>
+
+          <div class="login-error" id="login-error"></div>
+
+          <label class="login-label" for="email">Work email</label>
+          <input class="login-input" type="email" id="email" placeholder="you@business.com" autocomplete="email">
+
+          <label class="login-label" for="password">Password</label>
+          <input class="login-input" type="password" id="password" placeholder="Enter your password"
+            autocomplete="current-password">
+
+          <button class="btn primary lg full" id="login-btn" onclick="handleEmailLogin()" style="margin-top:18px;">
+            Enter seller workspace
+          </button>
+
+          <div class="status-bar loading" id="login-status" style="display:none;">
+            <div class="status-bar-spinner"></div>
+            <span id="login-status-msg">Checking your seller access...</span>
+          </div>
+
+          <div class="divider"><span>or continue with</span></div>
+
+          <button class="btn-google" id="google-btn" onclick="handleGoogleLogin()">
+            <svg width="18" height="18" viewBox="0 0 18 18">
+              <path
+                d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-.66-.15-1.18z"
+                fill="#4285F4" />
+              <path d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 0 1-7.18-2.54H1.83v2.07A8 8 0 0 0 8.98 17z"
+                fill="#34A853" />
+              <path d="M4.5 10.52a4.8 4.8 0 0 1 0-3.04V5.41H1.83a8 8 0 0 0 0 7.18l2.67-2.07z" fill="#FBBC05" />
+              <path d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 1.83 5.4L4.5 7.49a4.77 4.77 0 0 1 4.48-3.3z"
+                fill="#EA4335" />
+            </svg>
+            Continue with Google
+          </button>
+
+          <div class="auth-link-stack">
+            <p class="login-footer">New seller? <a href="#" onclick="handleRegister()">Create seller account</a></p>
+            <p class="login-footer">Buying instead? <a href="../merchant-portal/index.html">Open the merchant portal</a>
             </p>
+            <p class="login-footer"><a href="#" onclick="showForgotPassword(); return false;">Forgot password?</a></p>
           </div>
-          <div class="auth-chip">Seller</div>
-        </div>
-
-        <div class="login-error" id="login-error"></div>
-
-        <label class="login-label" for="email">Work email</label>
-        <input class="login-input" type="email" id="email" placeholder="you@business.com" autocomplete="email">
-
-        <label class="login-label" for="password">Password</label>
-        <input class="login-input" type="password" id="password" placeholder="Enter your password" autocomplete="current-password">
-
-        <button class="btn primary lg full" id="login-btn" onclick="handleEmailLogin()" style="margin-top:18px;">
-          Enter seller workspace
-        </button>
-
-        <div class="status-bar loading" id="login-status" style="display:none;">
-          <div class="status-bar-spinner"></div>
-          <span id="login-status-msg">Checking your seller access...</span>
-        </div>
-
-        <div class="divider"><span>or continue with</span></div>
-
-        <button class="btn-google" id="google-btn" onclick="handleGoogleLogin()">
-          <svg width="18" height="18" viewBox="0 0 18 18"><path d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-.66-.15-1.18z" fill="#4285F4"/><path d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 0 1-7.18-2.54H1.83v2.07A8 8 0 0 0 8.98 17z" fill="#34A853"/><path d="M4.5 10.52a4.8 4.8 0 0 1 0-3.04V5.41H1.83a8 8 0 0 0 0 7.18l2.67-2.07z" fill="#FBBC05"/><path d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 1.83 5.4L4.5 7.49a4.77 4.77 0 0 1 4.48-3.3z" fill="#EA4335"/></svg>
-          Continue with Google
-        </button>
-
-        <div class="auth-link-stack">
-          <p class="login-footer">New seller? <a href="#" onclick="handleRegister()">Create seller account</a></p>
-          <p class="login-footer">Buying instead? <a href="../merchant-portal/index.html">Open the merchant portal</a></p>
-          <p class="login-footer"><a href="#" onclick="showForgotPassword(); return false;">Forgot password?</a></p>
         </div>
       </div>
-    </div>
-  </div><!-- end login-shell -->
+    </div><!-- end login-shell -->
 
 
-  <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
        APP SHELL  (hidden until login)
        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
-  <div class="app-shell" id="app-shell" style="display:none;">
+    <div class="app-shell" id="app-shell" style="display:none;">
 
-    <!-- Mobile menu button -->
-    <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleSidebar()">Menu</button>
-    <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+      <!-- Mobile menu button -->
+      <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleSidebar()">Menu</button>
+      <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
 
-    <!-- aa SIDEBAR aa -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-brand">
-        <div class="sidebar-logo-icon">TL</div>
-        <div>
-          <div class="sidebar-name">TradeLink</div>
-          <div class="sidebar-sub">Seller Portal</div>
-        </div>
-      </div>
-
-      <div class="sidebar-scroll">
-        <div class="nav-section">
-          <div class="nav-section-label">Main</div>
-          <div class="nav-item active" onclick="navigate('dashboard', this)">
-            <span class="nav-icon">DB</span> Dashboard
-          </div>
-          <div class="nav-item" onclick="navigate('listings', this)">
-            <span class="nav-icon">LS</span> Listings
-            <span class="nav-badge info" id="nav-badge-listings">0</span>
-          </div>
-          <div class="nav-item" onclick="navigate('bids', this)">
-            <span class="nav-icon">BD</span> Live Bids
-            <span class="nav-badge" id="nav-badge-bids">0</span>
-          </div>
-          <div class="nav-item" onclick="navigate('deals', this)">
-            <span class="nav-icon">DL</span> Deals
-          </div>
-          <div class="nav-item" onclick="navigate('transport', this)">
-            <span class="nav-icon">TR</span> Transport
+      <!-- aa SIDEBAR aa -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+          <div class="sidebar-logo-icon">TL</div>
+          <div>
+            <div class="sidebar-name">TradeLink</div>
+            <div class="sidebar-sub">Seller Portal</div>
           </div>
         </div>
 
-        <div class="nav-section">
-          <div class="nav-section-label">Finance</div>
-          <div class="nav-item" onclick="navigate('payments', this)">
-            <span class="nav-icon">PY</span> Payments
+        <div class="sidebar-scroll">
+          <div class="nav-section">
+            <div class="nav-section-label">Main</div>
+            <div class="nav-item active" onclick="navigate('dashboard', this)">
+              <span class="nav-icon">DB</span> Dashboard
+            </div>
+            <div class="nav-item" onclick="navigate('listings', this)">
+              <span class="nav-icon">LS</span> Listings
+              <span class="nav-badge info" id="nav-badge-listings">0</span>
+            </div>
+            <div class="nav-item" onclick="navigate('bids', this)">
+              <span class="nav-icon">BD</span> Live Bids
+              <span class="nav-badge" id="nav-badge-bids">0</span>
+            </div>
+            <div class="nav-item" onclick="navigate('deals', this)">
+              <span class="nav-icon">DL</span> Deals
+            </div>
+            <div class="nav-item" onclick="navigate('transport', this)">
+              <span class="nav-icon">TR</span> Transport
+            </div>
           </div>
-          <div class="nav-item" onclick="navigate('payouts', this)">
-            <span class="nav-icon">PO</span> Payouts
+
+          <div class="nav-section">
+            <div class="nav-section-label">Finance</div>
+            <div class="nav-item" onclick="navigate('payments', this)">
+              <span class="nav-icon">PY</span> Payments
+            </div>
+            <div class="nav-item" onclick="navigate('payouts', this)">
+              <span class="nav-icon">PO</span> Payouts
+            </div>
+          </div>
+
+          <div class="nav-section">
+            <div class="nav-section-label">Account</div>
+            <div class="nav-item" onclick="navigate('profile', this)">
+              <span class="nav-icon">KY</span> Profile &amp; KYC
+            </div>
+            <div class="nav-item" onclick="navigate('help', this)">
+              <span class="nav-icon">HQ</span> Help &amp; Guide
+            </div>
           </div>
         </div>
 
-        <div class="nav-section">
-          <div class="nav-section-label">Account</div>
-          <div class="nav-item" onclick="navigate('profile', this)">
-            <span class="nav-icon">KY</span> Profile &amp; KYC
-          </div>
-          <div class="nav-item" onclick="navigate('help', this)">
-            <span class="nav-icon">HQ</span> Help &amp; Guide
+        <div class="sidebar-bottom">
+          <div class="user-pill" onclick="handleLogout()">
+            <div class="user-avatar" id="sidebar-avatar">SL</div>
+            <div style="flex:1;min-width:0;">
+              <div class="user-name" id="sidebar-name">Loading...</div>
+              <div class="user-role" id="sidebar-role">Seller</div>
+            </div>
+            <button class="logout-btn" title="Sign out">OUT</button>
           </div>
         </div>
-      </div>
+      </aside>
 
-      <div class="sidebar-bottom">
-        <div class="user-pill" onclick="handleLogout()">
-          <div class="user-avatar" id="sidebar-avatar">SL</div>
-          <div style="flex:1;min-width:0;">
-            <div class="user-name" id="sidebar-name">Loading...</div>
-            <div class="user-role" id="sidebar-role">Seller</div>
-          </div>
-          <button class="logout-btn" title="Sign out">OUT</button>
-        </div>
-      </div>
-    </aside>
+      <!-- aa MAIN CONTENT aa -->
+      <main class="content-area">
 
-    <!-- aa MAIN CONTENT aa -->
-    <main class="content-area">
-
-      <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
            SCREEN: DASHBOARD
            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
-      <div id="screen-dashboard" class="screen active">
+        <div id="screen-dashboard" class="screen active">
 
-        <!-- KYC warning -->
-        <div class="banner warning" id="kyc-banner" style="display:none;">
-          <span class="banner-icon">KYC</span>
-          <span class="banner-text">
-            <strong>KYC Incomplete.</strong> Upload your documents to start receiving payments.
-          </span>
-          <span class="banner-link" onclick="navigate('profile', null)">Complete KYC</span>
-        </div>
-
-        <div class="topbar">
-          <div>
-            <div class="topbar-title" id="dash-greeting">Seller overview</div>
-            <div class="topbar-sub" id="dash-subtext">Loading your live business summary.</div>
+          <!-- KYC warning -->
+          <div class="banner warning" id="kyc-banner" style="display:none;">
+            <span class="banner-icon">KYC</span>
+            <span class="banner-text">
+              <strong>KYC Incomplete.</strong> Upload your documents to start receiving payments.
+            </span>
+            <span class="banner-link" onclick="navigate('profile', null)">Complete KYC</span>
           </div>
-          <div class="topbar-actions">
-            <div class="icon-btn" onclick="navigate('notifications', null)" title="Notifications">
-              NT <span class="dot" id="notif-dot" style="display:none;"></span>
+
+          <div class="topbar">
+            <div>
+              <div class="topbar-title" id="dash-greeting">Seller overview</div>
+              <div class="topbar-sub" id="dash-subtext">Loading your live business summary.</div>
             </div>
-            <button class="btn primary" onclick="navigate('create-listing', null)">Create listing</button>
+            <div class="topbar-actions">
+              <div class="icon-btn" onclick="navigate('notifications', null)" title="Notifications">
+                NT <span class="dot" id="notif-dot" style="display:none;"></span>
+              </div>
+              <button class="btn primary" onclick="navigate('create-listing', null)">Create listing</button>
+            </div>
           </div>
-        </div>
 
-        <!-- Stat cards -->
-        <div class="grid-4 mb-20">
-          <div class="stat-card">
-            <span class="stat-icon">ACT</span>
-            <div class="stat-label">Active Listings</div>
-            <div class="stat-value loading" id="stat-active-listings">...</div>
-            <div class="stat-change" id="stat-active-change"> </div>
+          <!-- Stat cards -->
+          <div class="grid-4 mb-20">
+            <div class="stat-card">
+              <span class="stat-icon">ACT</span>
+              <div class="stat-label">Active Listings</div>
+              <div class="stat-value loading" id="stat-active-listings">...</div>
+              <div class="stat-change" id="stat-active-change"> </div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-icon">BID</span>
+              <div class="stat-label">Pending Bids</div>
+              <div class="stat-value loading" id="stat-pending-bids">...</div>
+              <div class="stat-change" id="stat-bids-change"> </div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-icon">REV</span>
+              <div class="stat-label">Total Earned</div>
+              <div class="stat-value loading" id="stat-total-earned">...</div>
+              <div class="stat-change up" id="stat-earned-change"> </div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-icon">RTG</span>
+              <div class="stat-label">Seller Rating</div>
+              <div class="stat-value loading" id="stat-rating">...</div>
+              <div class="stat-change" id="stat-rating-sub"> </div>
+            </div>
           </div>
-          <div class="stat-card">
-            <span class="stat-icon">BID</span>
-            <div class="stat-label">Pending Bids</div>
-            <div class="stat-value loading" id="stat-pending-bids">...</div>
-            <div class="stat-change" id="stat-bids-change"> </div>
-          </div>
-          <div class="stat-card">
-            <span class="stat-icon">REV</span>
-            <div class="stat-label">Total Earned</div>
-            <div class="stat-value loading" id="stat-total-earned">...</div>
-            <div class="stat-change up" id="stat-earned-change"> </div>
-          </div>
-          <div class="stat-card">
-            <span class="stat-icon">RTG</span>
-            <div class="stat-label">Seller Rating</div>
-            <div class="stat-value loading" id="stat-rating">...</div>
-            <div class="stat-change" id="stat-rating-sub"> </div>
-          </div>
-        </div>
 
-        <div class="grid-main">
-          <!-- Active listings table -->
+          <div class="grid-main">
+            <!-- Active listings table -->
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title">Active &amp; Pending Listings</span>
+                <button class="card-action" onclick="navigate('listings', null)">View all</button>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Product / Service</th>
+                      <th>Quantity</th>
+                      <th>Min Price</th>
+                      <th>Bids</th>
+                      <th>Expires In</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dash-listings-tbody">
+                    <tr>
+                      <td colspan="6">
+                        <div class="empty-state">
+                          <div class="spinner"></div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Right column -->
+            <div style="display:flex;flex-direction:column;gap:20px;">
+              <!-- Quick Actions -->
+              <div class="card" style="margin:0;">
+                <div class="card-header"><span class="card-title">Quick Actions</span></div>
+                <div class="quick-grid">
+                  <div class="quick-card" onclick="navigate('create-listing', null)">
+                    <div class="quick-icon">NEW</div>
+                    <div class="quick-title">Post Listing</div>
+                    <div class="quick-desc">Publish a fresh auction with quantity, price, and location.</div>
+                  </div>
+                  <div class="quick-card" onclick="navigate('deals', null)">
+                    <div class="quick-icon">TRK</div>
+                    <div class="quick-title">Track Delivery</div>
+                    <div class="quick-desc">Review dispatch progress and shipment handoff in one place.</div>
+                  </div>
+                  <div class="quick-card" onclick="navigate('profile', null)">
+                    <div class="quick-icon">KYC</div>
+                    <div class="quick-title">Upload KYC</div>
+                    <div class="quick-desc">Complete verification to unlock smoother payments and trust.</div>
+                  </div>
+                  <div class="quick-card" onclick="navigate('payouts', null)">
+                    <div class="quick-icon">PAY</div>
+                    <div class="quick-title">Withdraw</div>
+                    <div class="quick-desc">Move settled earnings to your linked bank account.</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recent Activity -->
+              <div class="card" style="margin:0;">
+                <div class="card-header"><span class="card-title">Recent Activity</span></div>
+                <div class="activity-feed" id="dash-activity">
+                  <div style="text-align:center;padding:24px;">
+                    <div class="spinner"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- end dashboard -->
+
+
+        <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+           SCREEN: MY LISTINGS
+           aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
+        <div id="screen-listings" class="screen">
+          <div class="topbar">
+            <div>
+              <div class="topbar-title">My Listings</div>
+              <div class="topbar-sub">All products and services you've listed for auction.</div>
+            </div>
+            <div class="topbar-actions">
+              <button class="btn" onclick="loadListings()">Refresh</button>
+              <button class="btn primary" onclick="navigate('create-listing', null)">Create listing</button>
+            </div>
+          </div>
+
           <div class="card">
-            <div class="card-header">
-              <span class="card-title">Active &amp; Pending Listings</span>
-              <button class="card-action" onclick="navigate('listings', null)">View all</button>
+            <div class="filter-bar">
+              <input class="filter-search" id="listings-search" placeholder="Search title, category, or location"
+                oninput="debouncedFilterListings()">
+              <select class="filter-select" id="listings-status-filter" onchange="filterListings()">
+                <option value="">All Status</option>
+                <option value="active">Active</option>
+                <option value="pending">Pending</option>
+                <option value="closed">Closed</option>
+                <option value="expired">Expired</option>
+              </select>
+              <select class="filter-select" id="listings-category-filter" onchange="filterListings()">
+                <option value="">All Categories</option>
+                <option>Agriculture / Farm Produce</option>
+                <option>Manufacturing / Industrial</option>
+                <option>Textiles &amp; Fabric</option>
+                <option>Food &amp; Processed</option>
+                <option>Handicrafts &amp; Artisans</option>
+                <option>Raw Materials</option>
+                <option>Electronics &amp; Components</option>
+                <option>Other</option>
+              </select>
+              <select class="filter-select" id="listings-sort" onchange="filterListings()">
+                <option value="created_at_desc">Newest First</option>
+                <option value="expires_at_asc">Expiring Soon</option>
+                <option value="bids_desc">Most Bids</option>
+              </select>
             </div>
             <div class="table-wrap">
               <table>
                 <thead>
                   <tr>
+                    <th>ID</th>
                     <th>Product / Service</th>
+                    <th>Category</th>
                     <th>Quantity</th>
                     <th>Min Price</th>
+                    <th>Top Bid</th>
                     <th>Bids</th>
                     <th>Expires In</th>
                     <th>Status</th>
                   </tr>
                 </thead>
-                <tbody id="dash-listings-tbody">
-                  <tr><td colspan="6"><div class="empty-state"><div class="spinner"></div></div></td></tr>
+                <tbody id="listings-tbody">
+                  <tr>
+                    <td colspan="9">
+                      <div class="empty-state">
+                        <div class="spinner"></div>
+                      </div>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
+            <div id="listings-pagination"></div>
           </div>
-
-          <!-- Right column -->
-          <div style="display:flex;flex-direction:column;gap:20px;">
-            <!-- Quick Actions -->
-            <div class="card" style="margin:0;">
-              <div class="card-header"><span class="card-title">Quick Actions</span></div>
-              <div class="quick-grid">
-                <div class="quick-card" onclick="navigate('create-listing', null)">
-                  <div class="quick-icon">NEW</div>
-                  <div class="quick-title">Post Listing</div>
-                  <div class="quick-desc">Publish a fresh auction with quantity, price, and location.</div>
-                </div>
-                <div class="quick-card" onclick="navigate('deals', null)">
-                  <div class="quick-icon">TRK</div>
-                  <div class="quick-title">Track Delivery</div>
-                  <div class="quick-desc">Review dispatch progress and shipment handoff in one place.</div>
-                </div>
-                <div class="quick-card" onclick="navigate('profile', null)">
-                  <div class="quick-icon">KYC</div>
-                  <div class="quick-title">Upload KYC</div>
-                  <div class="quick-desc">Complete verification to unlock smoother payments and trust.</div>
-                </div>
-                <div class="quick-card" onclick="navigate('payouts', null)">
-                  <div class="quick-icon">PAY</div>
-                  <div class="quick-title">Withdraw</div>
-                  <div class="quick-desc">Move settled earnings to your linked bank account.</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Recent Activity -->
-            <div class="card" style="margin:0;">
-              <div class="card-header"><span class="card-title">Recent Activity</span></div>
-              <div class="activity-feed" id="dash-activity">
-                <div style="text-align:center;padding:24px;"><div class="spinner"></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div><!-- end dashboard -->
+        </div><!-- end listings -->
 
 
-      <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-           SCREEN: MY LISTINGS
-           aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
-      <div id="screen-listings" class="screen">
-        <div class="topbar">
-          <div>
-            <div class="topbar-title">My Listings</div>
-            <div class="topbar-sub">All products and services you've listed for auction.</div>
-          </div>
-          <div class="topbar-actions">
-            <button class="btn" onclick="loadListings()">Refresh</button>
-            <button class="btn primary" onclick="navigate('create-listing', null)">Create listing</button>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="filter-bar">
-            <input class="filter-search" id="listings-search" placeholder="Search title, category, or location" oninput="debouncedFilterListings()">
-            <select class="filter-select" id="listings-status-filter" onchange="filterListings()">
-              <option value="">All Status</option>
-              <option value="active">Active</option>
-              <option value="pending">Pending</option>
-              <option value="closed">Closed</option>
-              <option value="expired">Expired</option>
-            </select>
-            <select class="filter-select" id="listings-category-filter" onchange="filterListings()">
-              <option value="">All Categories</option>
-              <option>Agriculture / Farm Produce</option>
-              <option>Manufacturing / Industrial</option>
-              <option>Textiles &amp; Fabric</option>
-              <option>Food &amp; Processed</option>
-              <option>Handicrafts &amp; Artisans</option>
-              <option>Raw Materials</option>
-              <option>Electronics &amp; Components</option>
-              <option>Other</option>
-            </select>
-            <select class="filter-select" id="listings-sort" onchange="filterListings()">
-              <option value="created_at_desc">Newest First</option>
-              <option value="expires_at_asc">Expiring Soon</option>
-              <option value="bids_desc">Most Bids</option>
-            </select>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>ID</th><th>Product / Service</th><th>Category</th>
-                  <th>Quantity</th><th>Min Price</th><th>Top Bid</th>
-                  <th>Bids</th><th>Expires In</th><th>Status</th>
-                </tr>
-              </thead>
-              <tbody id="listings-tbody">
-                <tr><td colspan="9"><div class="empty-state"><div class="spinner"></div></div></td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div id="listings-pagination"></div>
-        </div>
-      </div><!-- end listings -->
-
-
-      <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
            SCREEN: LIVE BIDS
            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
-      <div id="screen-bids" class="screen">
-        <div class="topbar">
-          <div>
-            <div class="topbar-title">Live Bids</div>
-            <div class="topbar-sub">Real-time bids from verified buyers on your active listings.</div>
+        <div id="screen-bids" class="screen">
+          <div class="topbar">
+            <div>
+              <div class="topbar-title">Live Bids</div>
+              <div class="topbar-sub">Real-time bids from verified buyers on your active listings.</div>
+            </div>
+            <div class="topbar-actions">
+              <div class="live-dot">Live updates</div>
+              <button class="btn" onclick="loadBids()">Refresh</button>
+            </div>
           </div>
-          <div class="topbar-actions">
-            <div class="live-dot">Live updates</div>
-            <button class="btn" onclick="loadBids()">Refresh</button>
+          <div id="bids-container" style="padding:0 28px 28px;">
+            <div class="card" style="margin:0;">
+              <div class="empty-state">
+                <div class="spinner"></div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div id="bids-container" style="padding:0 28px 28px;">
-          <div class="card" style="margin:0;"><div class="empty-state"><div class="spinner"></div></div></div>
-        </div>
-      </div><!-- end bids -->
+        </div><!-- end bids -->
 
 
-      <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
            SCREEN: MY DEALS
            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
-      <div id="screen-deals" class="screen">
-        <div class="topbar">
-          <div>
-            <div class="topbar-title">My Deals</div>
-            <div class="topbar-sub">Confirmed sales, delivery tracking, and payout status.</div>
-          </div>
-          <div class="topbar-actions">
-            <button class="btn" onclick="loadDeals()">Refresh</button>
-          </div>
-        </div>
-        <div class="card">
-          <div class="filter-bar">
-            <select class="filter-select" id="deals-status-filter" onchange="filterDeals()">
-              <option value="">All Deals</option>
-              <option value="pending">Payment Pending</option>
-              <option value="in_transit">In Transit</option>
-              <option value="delivered">Delivered</option>
-              <option value="cancelled">Cancelled</option>
-            </select>
-            <select class="filter-select" id="deals-sort" onchange="filterDeals()">
-              <option value="created_at_desc">Newest First</option>
-              <option value="amount_desc">Highest Amount</option>
-            </select>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Deal ID</th><th>Product</th><th>Buyer</th>
-                  <th>Amount</th><th>Your Payout</th><th>Deliver To</th><th>Status</th>
-                </tr>
-              </thead>
-              <tbody id="deals-tbody">
-                <tr><td colspan="7"><div class="empty-state"><div class="spinner"></div></div></td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div id="deals-pagination"></div>
-        </div>
-      </div><!-- end deals -->
-
-
-      <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-           SCREEN: PAYMENTS
-           aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
-      <div id="screen-payments" class="screen">
-        <div class="topbar">
-          <div>
-            <div class="topbar-title">Payments</div>
-            <div class="topbar-sub">Incoming payments for your confirmed deals.</div>
-          </div>
-        </div>
-        <div class="grid-3 mb-20">
-          <div class="stat-card">
-            <div class="stat-label">Total Received</div>
-            <div class="stat-value loading" id="pay-total-received">...</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Pending Release</div>
-            <div class="stat-value loading" id="pay-pending-release">...</div>
-            <div class="stat-change">held in escrow</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Platform Fees Paid</div>
-            <div class="stat-value loading" id="pay-fees">...</div>
-            <div class="stat-change">2% per deal</div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header"><span class="card-title">Payment History</span></div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Date</th><th>Deal ID</th><th>Product</th>
-                  <th>Gross Amount</th><th>Platform Fee (2%)</th><th>Net Payout</th><th>Status</th>
-                </tr>
-              </thead>
-              <tbody id="payments-tbody">
-                <tr><td colspan="7"><div class="empty-state"><div class="spinner"></div></div></td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div id="payments-pagination"></div>
-        </div>
-      </div><!-- end payments -->
-
-
-      <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-           SCREEN: PAYOUTS
-           aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
-      <div id="screen-payouts" class="screen">
-        <div class="topbar">
-          <div>
-            <div class="topbar-title">Payouts</div>
-            <div class="topbar-sub">Withdraw your earnings to your linked bank account.</div>
-          </div>
-        </div>
-        <div class="grid-2" style="max-width:820px;">
-          <!-- Withdrawal form -->
-          <div class="card" style="margin:0;">
-            <div class="card-title mb-16">Available Balance</div>
-            <div class="payout-balance" id="payout-balance">Loadinga</div>
-            <div class="payout-sub" id="payout-sub">From completed deals</div>
-
-            <div class="form-group" style="margin-top:20px;">
-              <label>Withdraw Amount <span class="req">*</span></label>
-              <input type="number" class="form-control" id="payout-amount" placeholder="Enter amount in a1">
-              <div class="form-hint">Minimum a1100. Maximum is your available balance.</div>
+        <div id="screen-deals" class="screen">
+          <div class="topbar">
+            <div>
+              <div class="topbar-title">My Deals</div>
+              <div class="topbar-sub">Confirmed sales, delivery tracking, and payout status.</div>
             </div>
-            <div class="form-group">
-              <label>Bank Account <span class="req">*</span></label>
-              <select class="form-control" id="payout-bank">
-                <option value="">Loading bank accountsa</option>
+            <div class="topbar-actions">
+              <button class="btn" onclick="loadDeals()">Refresh</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="filter-bar">
+              <select class="filter-select" id="deals-status-filter" onchange="filterDeals()">
+                <option value="">All Deals</option>
+                <option value="pending">Payment Pending</option>
+                <option value="in_transit">In Transit</option>
+                <option value="delivered">Delivered</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+              <select class="filter-select" id="deals-sort" onchange="filterDeals()">
+                <option value="created_at_desc">Newest First</option>
+                <option value="amount_desc">Highest Amount</option>
               </select>
             </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Deal ID</th>
+                    <th>Product</th>
+                    <th>Buyer</th>
+                    <th>Amount</th>
+                    <th>Your Payout</th>
+                    <th>Deliver To</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="deals-tbody">
+                  <tr>
+                    <td colspan="7">
+                      <div class="empty-state">
+                        <div class="spinner"></div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div id="deals-pagination"></div>
+          </div>
+        </div><!-- end deals -->
 
-            <button class="btn primary full lg" id="withdraw-btn" onclick="initiateWithdrawal()">
-              Withdraw to Bank
-            </button>
 
-            <!-- Status feedback for withdrawal -->
-            <div class="status-bar" id="withdraw-status">
-              <div class="status-bar-spinner"></div>
-              <span id="withdraw-status-msg"></span>
+        <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+           SCREEN: PAYMENTS
+           aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
+        <div id="screen-payments" class="screen">
+          <div class="topbar">
+            <div>
+              <div class="topbar-title">Payments</div>
+              <div class="topbar-sub">Incoming payments for your confirmed deals.</div>
+            </div>
+          </div>
+          <div class="grid-3 mb-20">
+            <div class="stat-card">
+              <div class="stat-label">Total Received</div>
+              <div class="stat-value loading" id="pay-total-received">...</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Pending Release</div>
+              <div class="stat-value loading" id="pay-pending-release">...</div>
+              <div class="stat-change">held in escrow</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Platform Fees Paid</div>
+              <div class="stat-value loading" id="pay-fees">...</div>
+              <div class="stat-change">2% per deal</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">Payment History</span></div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Deal ID</th>
+                    <th>Product</th>
+                    <th>Gross Amount</th>
+                    <th>Platform Fee (2%)</th>
+                    <th>Net Payout</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="payments-tbody">
+                  <tr>
+                    <td colspan="7">
+                      <div class="empty-state">
+                        <div class="spinner"></div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div id="payments-pagination"></div>
+          </div>
+        </div><!-- end payments -->
+
+
+        <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+           SCREEN: PAYOUTS
+           aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
+        <div id="screen-payouts" class="screen">
+          <div class="topbar">
+            <div>
+              <div class="topbar-title">Payouts</div>
+              <div class="topbar-sub">Withdraw your earnings to your linked bank account.</div>
+            </div>
+          </div>
+          <div class="grid-2" style="max-width:820px;">
+            <!-- Withdrawal form -->
+            <div class="card" style="margin:0;">
+              <div class="card-title mb-16">Available Balance</div>
+              <div class="payout-balance" id="payout-balance">Loadinga</div>
+              <div class="payout-sub" id="payout-sub">From completed deals</div>
+
+              <div class="form-group" style="margin-top:20px;">
+                <label>Withdraw Amount <span class="req">*</span></label>
+                <input type="number" class="form-control" id="payout-amount" placeholder="Enter amount in a1">
+                <div class="form-hint">Minimum a1100. Maximum is your available balance.</div>
+              </div>
+              <div class="form-group">
+                <label>Bank Account <span class="req">*</span></label>
+                <select class="form-control" id="payout-bank">
+                  <option value="">Loading bank accountsa</option>
+                </select>
+              </div>
+
+              <button class="btn primary full lg" id="withdraw-btn" onclick="initiateWithdrawal()">
+                Withdraw to Bank
+              </button>
+
+              <!-- Status feedback for withdrawal -->
+              <div class="status-bar" id="withdraw-status">
+                <div class="status-bar-spinner"></div>
+                <span id="withdraw-status-msg"></span>
+              </div>
+
+              <p style="font-size:12px;color:var(--text-muted);text-align:center;margin-top:12px;">
+                Settles within 2-3 business days via NEFT
+              </p>
             </div>
 
-            <p style="font-size:12px;color:var(--text-muted);text-align:center;margin-top:12px;">
-              Settles within 2-3 business days via NEFT
-            </p>
-          </div>
-
-          <!-- Payout history -->
-          <div class="card" style="margin:0;">
-            <div class="card-title mb-16">Payout History</div>
-            <div class="activity-feed" id="payout-history">
-              <div class="spinner" style="margin:24px auto;display:block;"></div>
+            <!-- Payout history -->
+            <div class="card" style="margin:0;">
+              <div class="card-title mb-16">Payout History</div>
+              <div class="activity-feed" id="payout-history">
+                <div class="spinner" style="margin:24px auto;display:block;"></div>
+              </div>
             </div>
           </div>
-        </div>
-      </div><!-- end payouts -->
+        </div><!-- end payouts -->
 
 
-      <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
            SCREEN: PROFILE & KYC
            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
-      <div id="screen-profile" class="screen">
-        <div class="topbar">
-          <div>
-            <div class="topbar-title">Profile &amp; KYC</div>
-            <div class="topbar-sub">Verify your account to unlock payments and higher trust score.</div>
-          </div>
-        </div>
-        <div class="grid-main" style="--grid-right:320px;">
-          <div>
-            <!-- Business Info -->
-            <div class="card mb-20">
-              <div class="card-title mb-16">Business / Personal Information</div>
-              <form id="profile-form">
-                <div class="form-row">
-                  <div class="form-group">
-                    <label>Full Name <span class="req">*</span></label>
-                    <input type="text" class="form-control" id="p-name" placeholder="Your full name">
-                  </div>
-                  <div class="form-group">
-                    <label>Business Name</label>
-                    <input type="text" class="form-control" id="p-biz-name" placeholder="Optional a if registered">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label>Phone (OTP verified)</label>
-                    <input type="tel" class="form-control" id="p-phone" readonly placeholder="Auto-filled from login">
-                  </div>
-                  <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" class="form-control" id="p-email" readonly placeholder="Auto-filled from login">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label>City</label>
-                    <input type="text" class="form-control" id="p-city" placeholder="Your city">
-                  </div>
-                  <div class="form-group">
-                    <label>State</label>
-                    <select class="form-control" id="p-state">
-                      <option value="">Select state</option>
-                      <option>Andhra Pradesh</option><option>Assam</option>
-                      <option>Bihar</option><option>Delhi</option>
-                      <option>Gujarat</option><option>Haryana</option>
-                      <option>Karnataka</option><option>Kerala</option>
-                      <option>Madhya Pradesh</option><option>Maharashtra</option>
-                      <option>Punjab</option><option>Rajasthan</option>
-                      <option>Tamil Nadu</option><option>Telangana</option>
-                      <option>Uttar Pradesh</option><option>West Bengal</option>
-                      <option>Other</option>
-                    </select>
-                  </div>
-                </div>
-                <button type="button" class="btn primary" id="save-profile-btn" onclick="saveProfile()">Save Changes</button>
-                <div class="status-bar" id="profile-status">
-                  <div class="status-bar-spinner"></div>
-                  <span id="profile-status-msg"></span>
-                </div>
-              </form>
-            </div>
-
-            <!-- KYC Documents -->
-            <div class="card">
-              <div class="card-title mb-8">KYC Documents</div>
-              <p style="font-size:13px;color:var(--text-muted);margin-bottom:18px;line-height:1.6;">
-                Required to receive payments. All data is encrypted and stored securely on our servers.
-              </p>
-              <form id="kyc-form">
-                <div class="form-row">
-                  <div class="form-group">
-                    <label>Aadhaar Number <span class="req">*</span></label>
-                    <input type="text" class="form-control" id="kyc-aadhaar" placeholder="XXXX XXXX XXXX" maxlength="14">
-                  </div>
-                  <div class="form-group">
-                    <label>PAN Number <span class="req">*</span></label>
-                    <input type="text" class="form-control" id="kyc-pan" placeholder="ABCDE1234F" maxlength="10">
-                  </div>
-                </div>
-
-                <div class="form-row">
-                  <div>
-                    <div class="upload-zone" onclick="triggerUpload('aadhaar-file')" id="aadhaar-zone">
-                      <div class="upload-icon">DOC</div>
-                      <div class="upload-label">Upload Aadhaar Card</div>
-                      <div class="upload-sub">JPG, PNG or PDF A Max 5MB</div>
-                      <div class="upload-pbar-wrap"><div class="upload-pbar" id="aadhaar-pbar"></div></div>
-                    </div>
-                    <input type="file" id="aadhaar-file" style="display:none;" accept=".jpg,.png,.pdf" onchange="handleFileUpload('aadhaar-file','aadhaar-zone','aadhaar-pbar')">
-                  </div>
-                  <div>
-                    <div class="upload-zone" onclick="triggerUpload('pan-file')" id="pan-zone">
-                      <div class="upload-icon">DOC</div>
-                      <div class="upload-label">Upload PAN Card</div>
-                      <div class="upload-sub">JPG, PNG or PDF A Max 5MB</div>
-                      <div class="upload-pbar-wrap"><div class="upload-pbar" id="pan-pbar"></div></div>
-                    </div>
-                    <input type="file" id="pan-file" style="display:none;" accept=".jpg,.png,.pdf" onchange="handleFileUpload('pan-file','pan-zone','pan-pbar')">
-                  </div>
-                </div>
-
-                <div class="form-row" style="margin-top:8px;">
-                  <div class="form-group">
-                    <label>Bank Account Number <span class="req">*</span></label>
-                    <input type="text" class="form-control" id="kyc-bank-acc" placeholder="Account number">
-                  </div>
-                  <div class="form-group">
-                    <label>IFSC Code <span class="req">*</span></label>
-                    <input type="text" class="form-control" id="kyc-ifsc" placeholder="SBIN0001234">
-                  </div>
-                </div>
-
-                <div class="form-row">
-                  <div class="form-group">
-                    <label>GST Number <span style="color:var(--text-muted);font-weight:400;">(optional)</span></label>
-                    <input type="text" class="form-control" id="kyc-gst" placeholder="27ABCDE1234F1Z5">
-                  </div>
-                  <div>
-                    <div class="upload-zone" onclick="triggerUpload('selfie-file')" id="selfie-zone">
-                      <div class="upload-icon">Y</div>
-                      <div class="upload-label">Upload Selfie</div>
-                      <div class="upload-sub">For face verification</div>
-                      <div class="upload-pbar-wrap"><div class="upload-pbar" id="selfie-pbar"></div></div>
-                    </div>
-                    <input type="file" id="selfie-file" style="display:none;" accept=".jpg,.png" onchange="handleFileUpload('selfie-file','selfie-zone','selfie-pbar')">
-                  </div>
-                </div>
-
-                <button type="button" class="btn primary" id="kyc-submit-btn" style="margin-top:16px;" onclick="submitKYC()">
-                  Submit KYC Documents
-                </button>
-                <!-- KYC submission status -->
-                <div class="status-bar" id="kyc-status-bar">
-                  <div class="status-bar-spinner"></div>
-                  <span id="kyc-status-bar-msg"></span>
-                </div>
-              </form>
+        <div id="screen-profile" class="screen">
+          <div class="topbar">
+            <div>
+              <div class="topbar-title">Profile &amp; KYC</div>
+              <div class="topbar-sub">Verify your account to unlock payments and higher trust score.</div>
             </div>
           </div>
+          <div class="grid-main" style="--grid-right:320px;">
+            <div>
+              <!-- Business Info -->
+              <div class="card mb-20">
+                <div class="card-title mb-16">Business / Personal Information</div>
+                <form id="profile-form">
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label>Full Name <span class="req">*</span></label>
+                      <input type="text" class="form-control" id="p-name" placeholder="Your full name">
+                    </div>
+                    <div class="form-group">
+                      <label>Business Name</label>
+                      <input type="text" class="form-control" id="p-biz-name" placeholder="Optional a if registered">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label>Phone (OTP verified)</label>
+                      <input type="tel" class="form-control" id="p-phone" readonly placeholder="Auto-filled from login">
+                    </div>
+                    <div class="form-group">
+                      <label>Email</label>
+                      <input type="email" class="form-control" id="p-email" readonly
+                        placeholder="Auto-filled from login">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label>City</label>
+                      <input type="text" class="form-control" id="p-city" placeholder="Your city">
+                    </div>
+                    <div class="form-group">
+                      <label>State</label>
+                      <select class="form-control" id="p-state">
+                        <option value="">Select state</option>
+                        <option>Andhra Pradesh</option>
+                        <option>Assam</option>
+                        <option>Bihar</option>
+                        <option>Delhi</option>
+                        <option>Gujarat</option>
+                        <option>Haryana</option>
+                        <option>Karnataka</option>
+                        <option>Kerala</option>
+                        <option>Madhya Pradesh</option>
+                        <option>Maharashtra</option>
+                        <option>Punjab</option>
+                        <option>Rajasthan</option>
+                        <option>Tamil Nadu</option>
+                        <option>Telangana</option>
+                        <option>Uttar Pradesh</option>
+                        <option>West Bengal</option>
+                        <option>Other</option>
+                      </select>
+                    </div>
+                  </div>
+                  <button type="button" class="btn primary" id="save-profile-btn" onclick="saveProfile()">Save
+                    Changes</button>
+                  <div class="status-bar" id="profile-status">
+                    <div class="status-bar-spinner"></div>
+                    <span id="profile-status-msg"></span>
+                  </div>
+                </form>
+              </div>
 
-          <!-- KYC Status sidebar -->
-          <div class="card" style="height:fit-content;margin:0;">
-            <div class="card-title mb-16">Verification Status</div>
-            <div id="kyc-status-list">
-              <div class="spinner" style="margin:24px auto;display:block;"></div>
+              <!-- KYC Documents -->
+              <div class="card">
+                <div class="card-title mb-8">KYC Documents</div>
+                <p style="font-size:13px;color:var(--text-muted);margin-bottom:18px;line-height:1.6;">
+                  Required to receive payments. All data is encrypted and stored securely on our servers.
+                </p>
+                <form id="kyc-form">
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label>Aadhaar Number <span class="req">*</span></label>
+                      <input type="text" class="form-control" id="kyc-aadhaar" placeholder="XXXX XXXX XXXX"
+                        maxlength="14">
+                    </div>
+                    <div class="form-group">
+                      <label>PAN Number <span class="req">*</span></label>
+                      <input type="text" class="form-control" id="kyc-pan" placeholder="ABCDE1234F" maxlength="10">
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div>
+                      <div class="upload-zone" onclick="triggerUpload('aadhaar-file')" id="aadhaar-zone">
+                        <div class="upload-icon">DOC</div>
+                        <div class="upload-label">Upload Aadhaar Card</div>
+                        <div class="upload-sub">JPG, PNG or PDF A Max 5MB</div>
+                        <div class="upload-pbar-wrap">
+                          <div class="upload-pbar" id="aadhaar-pbar"></div>
+                        </div>
+                      </div>
+                      <input type="file" id="aadhaar-file" style="display:none;" accept=".jpg,.png,.pdf"
+                        onchange="handleFileUpload('aadhaar-file','aadhaar-zone','aadhaar-pbar')">
+                    </div>
+                    <div>
+                      <div class="upload-zone" onclick="triggerUpload('pan-file')" id="pan-zone">
+                        <div class="upload-icon">DOC</div>
+                        <div class="upload-label">Upload PAN Card</div>
+                        <div class="upload-sub">JPG, PNG or PDF A Max 5MB</div>
+                        <div class="upload-pbar-wrap">
+                          <div class="upload-pbar" id="pan-pbar"></div>
+                        </div>
+                      </div>
+                      <input type="file" id="pan-file" style="display:none;" accept=".jpg,.png,.pdf"
+                        onchange="handleFileUpload('pan-file','pan-zone','pan-pbar')">
+                    </div>
+                  </div>
+
+                  <div class="form-row" style="margin-top:8px;">
+                    <div class="form-group">
+                      <label>Bank Account Number <span class="req">*</span></label>
+                      <input type="text" class="form-control" id="kyc-bank-acc" placeholder="Account number">
+                    </div>
+                    <div class="form-group">
+                      <label>IFSC Code <span class="req">*</span></label>
+                      <input type="text" class="form-control" id="kyc-ifsc" placeholder="SBIN0001234">
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label>GST Number <span style="color:var(--text-muted);font-weight:400;">(optional)</span></label>
+                      <input type="text" class="form-control" id="kyc-gst" placeholder="27ABCDE1234F1Z5">
+                    </div>
+                    <div>
+                      <div class="upload-zone" onclick="triggerUpload('selfie-file')" id="selfie-zone">
+                        <div class="upload-icon">Y</div>
+                        <div class="upload-label">Upload Selfie</div>
+                        <div class="upload-sub">For face verification</div>
+                        <div class="upload-pbar-wrap">
+                          <div class="upload-pbar" id="selfie-pbar"></div>
+                        </div>
+                      </div>
+                      <input type="file" id="selfie-file" style="display:none;" accept=".jpg,.png"
+                        onchange="handleFileUpload('selfie-file','selfie-zone','selfie-pbar')">
+                    </div>
+                  </div>
+
+                  <button type="button" class="btn primary" id="kyc-submit-btn" style="margin-top:16px;"
+                    onclick="submitKYC()">
+                    Submit KYC Documents
+                  </button>
+                  <!-- KYC submission status -->
+                  <div class="status-bar" id="kyc-status-bar">
+                    <div class="status-bar-spinner"></div>
+                    <span id="kyc-status-bar-msg"></span>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- KYC Status sidebar -->
+            <div class="card" style="height:fit-content;margin:0;">
+              <div class="card-title mb-16">Verification Status</div>
+              <div id="kyc-status-list">
+                <div class="spinner" style="margin:24px auto;display:block;"></div>
+              </div>
             </div>
           </div>
-        </div>
-      </div><!-- end profile -->
+        </div><!-- end profile -->
 
 
-      <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
            SCREEN: TRANSPORT
            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
-      <div id="screen-transport" class="screen">
-        <div class="topbar">
-          <div class="topbar-title">Transport</div>
-          <div class="topbar-sub">Post transport requests, track live deliveries, and manage transporter payments with less friction.</div>
-        </div>
-        <div class="screen-body">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-            <div style="font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--text-primary);">My Transport Requests</div>
-            <button class="btn primary sm" onclick="openTransportRequestModal()">Create request</button>
+        <div id="screen-transport" class="screen">
+          <div class="topbar">
+            <div class="topbar-title">Transport</div>
+            <div class="topbar-sub">Post transport requests, track live deliveries, and manage transporter payments with
+              less friction.</div>
           </div>
-          <div id="transport-requests-list"></div>
+          <div class="screen-body">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+              <div style="font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--text-primary);">My
+                Transport Requests</div>
+              <button class="btn primary sm" onclick="openTransportRequestModal()">Create request</button>
+            </div>
+            <div id="transport-requests-list"></div>
+          </div>
         </div>
-      </div>
 
 
-      <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
            SCREEN: HELP
            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
-      <div id="screen-help" class="screen">
-        <div class="topbar">
-          <div>
-            <div class="topbar-title">Help &amp; Guide</div>
-            <div class="topbar-sub">Everything you need to know about selling on TradeLink.</div>
+        <div id="screen-help" class="screen">
+          <div class="topbar">
+            <div>
+              <div class="topbar-title">Help &amp; Guide</div>
+              <div class="topbar-sub">Everything you need to know about selling on TradeLink.</div>
+            </div>
           </div>
-        </div>
-        <div class="help-grid">
-          <div class="help-card">
-            <div class="help-card-icon">LIST</div>
-            <div class="help-card-title">How to Post a Listing</div>
-            <div class="help-card-desc">List any product a farm produce, manufactured goods, raw materials, handicrafts, electronics a anything your business sells.</div>
+          <div class="help-grid">
+            <div class="help-card">
+              <div class="help-card-icon">LIST</div>
+              <div class="help-card-title">How to Post a Listing</div>
+              <div class="help-card-desc">List any product a farm produce, manufactured goods, raw materials,
+                handicrafts, electronics a anything your business sells.</div>
+            </div>
+            <div class="help-card">
+              <div class="help-card-icon">BID</div>
+              <div class="help-card-title">How Bidding Works</div>
+              <div class="help-card-desc">Reverse auction: buyers compete and offer prices. Your minimum price is always
+                protected. Highest bid wins when auction closes.</div>
+            </div>
+            <div class="help-card">
+              <div class="help-card-icon">PAY</div>
+              <div class="help-card-title">Payments &amp; Escrow</div>
+              <div class="help-card-desc">Buyer pays upfront via Razorpay. Money is held in escrow. Released to your
+                bank only after delivery is confirmed.</div>
+            </div>
+            <div class="help-card">
+              <div class="help-card-icon">KYC</div>
+              <div class="help-card-title">KYC Requirements</div>
+              <div class="help-card-desc">Aadhaar + PAN + Bank Account required. Takes 1a2 business days. Without KYC
+                you cannot receive payouts.</div>
+            </div>
+            <div class="help-card">
+              <div class="help-card-icon">RATE</div>
+              <div class="help-card-title">Build Your Seller Rating</div>
+              <div class="help-card-desc">Higher rating = more trust = more bids = better prices. Deliver on time, keep
+                quality consistent.</div>
+            </div>
+            <div class="help-card">
+              <div class="help-card-icon">SUP</div>
+              <div class="help-card-title">Contact Support</div>
+              <div class="help-card-desc">WhatsApp: +91 88888 00000 A Email: support@tradelink.in A Available MonaSat 9
+                AM to 6 PM.</div>
+            </div>
           </div>
-          <div class="help-card">
-            <div class="help-card-icon">BID</div>
-            <div class="help-card-title">How Bidding Works</div>
-            <div class="help-card-desc">Reverse auction: buyers compete and offer prices. Your minimum price is always protected. Highest bid wins when auction closes.</div>
-          </div>
-          <div class="help-card">
-            <div class="help-card-icon">PAY</div>
-            <div class="help-card-title">Payments &amp; Escrow</div>
-            <div class="help-card-desc">Buyer pays upfront via Razorpay. Money is held in escrow. Released to your bank only after delivery is confirmed.</div>
-          </div>
-          <div class="help-card">
-            <div class="help-card-icon">KYC</div>
-            <div class="help-card-title">KYC Requirements</div>
-            <div class="help-card-desc">Aadhaar + PAN + Bank Account required. Takes 1a2 business days. Without KYC you cannot receive payouts.</div>
-          </div>
-          <div class="help-card">
-            <div class="help-card-icon">RATE</div>
-            <div class="help-card-title">Build Your Seller Rating</div>
-            <div class="help-card-desc">Higher rating = more trust = more bids = better prices. Deliver on time, keep quality consistent.</div>
-          </div>
-          <div class="help-card">
-            <div class="help-card-icon">SUP</div>
-            <div class="help-card-title">Contact Support</div>
-            <div class="help-card-desc">WhatsApp: +91 88888 00000 A Email: support@tradelink.in A Available MonaSat 9 AM to 6 PM.</div>
-          </div>
-        </div>
-      </div><!-- end help -->
+        </div><!-- end help -->
 
 
-      <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
            SCREEN: CREATE LISTING
            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
-      <div id="screen-create-listing" class="screen">
-        <div class="topbar">
-          <div>
-            <div class="topbar-title">Post New Listing</div>
-            <div class="topbar-sub">Sell anything a farm produce, manufactured goods, raw materials, handicrafts, services.</div>
-          </div>
-          <div class="topbar-actions">
-            <button class="btn" onclick="navigate('listings', null)">Back</button>
-          </div>
-        </div>
-
-        <div class="card" style="max-width:760px;">
-          <div class="step-tabs">
-            <div class="step-tab active" id="step-tab-1">1. Product Info</div>
-            <div class="step-tab"        id="step-tab-2">2. Price &amp; Quantity</div>
-            <div class="step-tab"        id="step-tab-3">3. Photos &amp; Location</div>
+        <div id="screen-create-listing" class="screen">
+          <div class="topbar">
+            <div>
+              <div class="topbar-title">Post New Listing</div>
+              <div class="topbar-sub">Sell anything a farm produce, manufactured goods, raw materials, handicrafts,
+                services.</div>
+            </div>
+            <div class="topbar-actions">
+              <button class="btn" onclick="navigate('listings', null)">Back</button>
+            </div>
           </div>
 
-          <form id="create-listing-form">
-            <div class="form-row">
-              <div class="form-group">
-                <label>Product / Service Title <span class="req">*</span></label>
-                <input type="text" class="form-control" id="cl-title" placeholder="e.g. Wheat Grade A, Steel Pipes ISI, Handloom Sarees">
-              </div>
-              <div class="form-group">
-                <label>Category <span class="req">*</span></label>
-                <select class="form-control" id="cl-category">
-                  <option value="">Select category</option>
-                  <option>Agriculture / Farm Produce</option>
-                  <option>Manufacturing / Industrial</option>
-                  <option>Textiles &amp; Fabric</option>
-                  <option>Food &amp; Processed</option>
-                  <option>Handicrafts &amp; Artisans</option>
-                  <option>Raw Materials</option>
-                  <option>Electronics &amp; Components</option>
-                  <option>Other</option>
-                </select>
-              </div>
+          <div class="card" style="max-width:760px;">
+            <div class="step-tabs">
+              <div class="step-tab active" id="step-tab-1">1. Product Info</div>
+              <div class="step-tab" id="step-tab-2">2. Price &amp; Quantity</div>
+              <div class="step-tab" id="step-tab-3">3. Photos &amp; Location</div>
             </div>
 
-            <div class="form-group">
-              <label>Description <span class="req">*</span></label>
-              <textarea class="form-control" id="cl-description" placeholder="Describe quality, grade, specifications, certifications, packaging, minimum order, and delivery terms" style="min-height:110px;"></textarea>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label>Total Quantity Available <span class="req">*</span></label>
-                <input type="number" class="form-control" id="cl-qty" placeholder="e.g. 5000" min="1">
-              </div>
-              <div class="form-group">
-                <label>Unit of Measurement <span class="req">*</span></label>
-                <select class="form-control" id="cl-unit">
-                  <option value="">Select unit</option>
-                  <option>kg</option><option>tonnes</option>
-                  <option>litres</option><option>metres</option>
-                  <option>units</option><option>boxes</option>
-                  <option>bags</option><option>sets</option>
-                  <option>pieces</option><option>quintals</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label>Minimum Bid Price (per unit) <span class="req">*</span></label>
-                <input type="number" class="form-control" id="cl-min-price" placeholder="e.g. 22" min="1">
-                <div class="form-hint">No bid below this price will be accepted.</div>
-              </div>
-              <div class="form-group">
-                <label>Auction Duration <span class="req">*</span></label>
-                <select class="form-control" id="cl-duration">
-                  <option value="12">12 hours</option>
-                  <option value="24" selected>24 hours (Recommended)</option>
-                  <option value="48">48 hours</option>
-                  <option value="72">72 hours</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label>City / Location <span class="req">*</span></label>
-                <input type="text" class="form-control" id="cl-city" placeholder="City where product is located">
-              </div>
-              <div class="form-group">
-                <label>State</label>
-                <select class="form-control" id="cl-state">
-                  <option value="">Select state</option>
-                  <option>Andhra Pradesh</option><option>Assam</option>
-                  <option>Bihar</option><option>Delhi</option>
-                  <option>Gujarat</option><option>Haryana</option>
-                  <option>Karnataka</option><option>Kerala</option>
-                  <option>Madhya Pradesh</option><option>Maharashtra</option>
-                  <option>Punjab</option><option>Rajasthan</option>
-                  <option>Tamil Nadu</option><option>Telangana</option>
-                  <option>Uttar Pradesh</option><option>West Bengal</option>
-                  <option>Other</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>Product Photos</label>
-              <div class="upload-zone" id="listing-photo-zone" onclick="triggerUpload('listing-photos')">
-              <div class="upload-icon">PH</div>
-              <div class="upload-label" id="listing-photo-label">Upload clear product photos (up to 5)</div>
-              <div class="upload-sub">JPG or PNG only. Max 5MB each.</div>
-                <div class="upload-pbar-wrap"><div class="upload-pbar" id="listing-pbar"></div></div>
-              </div>
-              <input type="file" id="listing-photos" style="display:none;" multiple accept=".jpg,.png" onchange="handleListingPhotos(this)">
-              <div id="listing-photo-preview" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;"></div>
-            </div>
-
-            <div class="form-group">
-              <label>Location on Map</label>
-              <div id="listing-map" style="height:200px;border-radius:var(--r);overflow:hidden;border:1px solid var(--bg-border-2);background:var(--bg-surface);">
-                <div style="height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;">
-                  <div style="font-size:14px;font-weight:700;letter-spacing:.14em;">MAP</div>
-                  <div style="font-size:13px;color:var(--text-muted);" id="listing-map-city">Detecting location...</div>
-                  <div style="font-size:11px;color:var(--text-muted);">Map loads after location detected</div>
+            <form id="create-listing-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Product / Service Title <span class="req">*</span></label>
+                  <input type="text" class="form-control" id="cl-title"
+                    placeholder="e.g. Wheat Grade A, Steel Pipes ISI, Handloom Sarees">
+                </div>
+                <div class="form-group">
+                  <label>Category <span class="req">*</span></label>
+                  <select class="form-control" id="cl-category">
+                    <option value="">Select category</option>
+                    <option>Agriculture / Farm Produce</option>
+                    <option>Manufacturing / Industrial</option>
+                    <option>Textiles &amp; Fabric</option>
+                    <option>Food &amp; Processed</option>
+                    <option>Handicrafts &amp; Artisans</option>
+                    <option>Raw Materials</option>
+                    <option>Electronics &amp; Components</option>
+                    <option>Other</option>
+                  </select>
                 </div>
               </div>
-            </div>
 
-            <!-- Listing submit actions -->
-            <div style="display:flex;gap:12px;margin-top:8px;flex-wrap:wrap;">
-              <button type="button" class="btn" id="draft-btn" onclick="saveDraft()">Save as Draft</button>
-              <button type="button" class="btn primary" id="listing-submit-btn" onclick="submitListing()">
-                Publish Listing
-              </button>
-            </div>
+              <div class="form-group">
+                <label>Description <span class="req">*</span></label>
+                <textarea class="form-control" id="cl-description"
+                  placeholder="Describe quality, grade, specifications, certifications, packaging, minimum order, and delivery terms"
+                  style="min-height:110px;"></textarea>
+              </div>
 
-            <!-- Submit feedback -->
-            <div class="status-bar" id="listing-status">
-              <div class="status-bar-spinner"></div>
-              <span id="listing-status-msg"></span>
-            </div>
-          </form>
-        </div>
-      </div><!-- end create-listing -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Total Quantity Available <span class="req">*</span></label>
+                  <input type="number" class="form-control" id="cl-qty" placeholder="e.g. 5000" min="1">
+                </div>
+                <div class="form-group">
+                  <label>Unit of Measurement <span class="req">*</span></label>
+                  <select class="form-control" id="cl-unit">
+                    <option value="">Select unit</option>
+                    <option>kg</option>
+                    <option>tonnes</option>
+                    <option>litres</option>
+                    <option>metres</option>
+                    <option>units</option>
+                    <option>boxes</option>
+                    <option>bags</option>
+                    <option>sets</option>
+                    <option>pieces</option>
+                    <option>quintals</option>
+                  </select>
+                </div>
+              </div>
 
-    </main>
-  </div><!-- end app-shell -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Minimum Bid Price (per unit) <span class="req">*</span></label>
+                  <input type="number" class="form-control" id="cl-min-price" placeholder="e.g. 22" min="1">
+                  <div class="form-hint">No bid below this price will be accepted.</div>
+                </div>
+                <div class="form-group">
+                  <label>Auction Duration <span class="req">*</span></label>
+                  <select class="form-control" id="cl-duration">
+                    <option value="12">12 hours</option>
+                    <option value="24" selected>24 hours (Recommended)</option>
+                    <option value="48">48 hours</option>
+                    <option value="72">72 hours</option>
+                  </select>
+                </div>
+              </div>
 
-</div><!-- end page -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label>City / Location <span class="req">*</span></label>
+                  <input type="text" class="form-control" id="cl-city" placeholder="City where product is located">
+                </div>
+                <div class="form-group">
+                  <label>State</label>
+                  <select class="form-control" id="cl-state">
+                    <option value="">Select state</option>
+                    <option>Andhra Pradesh</option>
+                    <option>Assam</option>
+                    <option>Bihar</option>
+                    <option>Delhi</option>
+                    <option>Gujarat</option>
+                    <option>Haryana</option>
+                    <option>Karnataka</option>
+                    <option>Kerala</option>
+                    <option>Madhya Pradesh</option>
+                    <option>Maharashtra</option>
+                    <option>Punjab</option>
+                    <option>Rajasthan</option>
+                    <option>Tamil Nadu</option>
+                    <option>Telangana</option>
+                    <option>Uttar Pradesh</option>
+                    <option>West Bengal</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Product Photos</label>
+                <div class="upload-zone" id="listing-photo-zone" onclick="triggerUpload('listing-photos')">
+                  <div class="upload-icon">PH</div>
+                  <div class="upload-label" id="listing-photo-label">Upload clear product photos (up to 5)</div>
+                  <div class="upload-sub">JPG or PNG only. Max 5MB each.</div>
+                  <div class="upload-pbar-wrap">
+                    <div class="upload-pbar" id="listing-pbar"></div>
+                  </div>
+                </div>
+                <input type="file" id="listing-photos" style="display:none;" multiple accept=".jpg,.png"
+                  onchange="handleListingPhotos(this)">
+                <div id="listing-photo-preview" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;"></div>
+              </div>
+
+              <div class="form-group">
+                <label>Location on Map</label>
+                <div id="listing-map"
+                  style="height:200px;border-radius:var(--r);overflow:hidden;border:1px solid var(--bg-border-2);background:var(--bg-surface);">
+                  <div
+                    style="height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;">
+                    <div style="font-size:14px;font-weight:700;letter-spacing:.14em;">MAP</div>
+                    <div style="font-size:13px;color:var(--text-muted);" id="listing-map-city">Detecting location...
+                    </div>
+                    <div style="font-size:11px;color:var(--text-muted);">Map loads after location detected</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Listing submit actions -->
+              <div style="display:flex;gap:12px;margin-top:8px;flex-wrap:wrap;">
+                <button type="button" class="btn" id="draft-btn" onclick="saveDraft()">Save as Draft</button>
+                <button type="button" class="btn primary" id="listing-submit-btn" onclick="submitListing()">
+                  Publish Listing
+                </button>
+              </div>
+
+              <!-- Submit feedback -->
+              <div class="status-bar" id="listing-status">
+                <div class="status-bar-spinner"></div>
+                <span id="listing-status-msg"></span>
+              </div>
+            </form>
+          </div>
+        </div><!-- end create-listing -->
+
+      </main>
+    </div><!-- end app-shell -->
+
+  </div><!-- end page -->
 
 
-<!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
      SHARED MODAL
      aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
-<div class="overlay" id="modal-overlay" onclick="closeModal(event)">
-  <div class="modal" onclick="event.stopPropagation()">
-    <div class="modal-header">
-      <div>
-        <div class="modal-title" id="modal-title"></div>
-        <div class="modal-sub"   id="modal-sub"></div>
+  <div class="overlay" id="modal-overlay" onclick="closeModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title" id="modal-title"></div>
+          <div class="modal-sub" id="modal-sub"></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span id="modal-badge" class="badge brand"></span>
+          <button class="close-btn" onclick="closeModalDirect()">X</button>
+        </div>
       </div>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <span id="modal-badge" class="badge brand"></span>
-        <button class="close-btn" onclick="closeModalDirect()">X</button>
-      </div>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-footer" id="modal-footer"></div>
     </div>
-    <div class="modal-body"   id="modal-body"></div>
-    <div class="modal-footer" id="modal-footer"></div>
   </div>
-</div>
 
-<!-- Toast container -->
-<div id="toast-container"></div>
+  <!-- Toast container -->
+  <div id="toast-container"></div>
 
-<!-- Action overlay (blocking loader) -->
-<div class="action-overlay" id="action-overlay" style="display:none;">
-  <div class="action-overlay-spinner"></div>
-  <div class="action-overlay-title" id="action-overlay-title">Processing...</div>
-  <div class="action-overlay-sub"   id="action-overlay-sub">Please wait, do not close this page.</div>
-</div>
+  <!-- Action overlay (blocking loader) -->
+  <div class="action-overlay" id="action-overlay" style="display:none;">
+    <div class="action-overlay-spinner"></div>
+    <div class="action-overlay-title" id="action-overlay-title">Processing...</div>
+    <div class="action-overlay-sub" id="action-overlay-sub">Please wait, do not close this page.</div>
+  </div>
 
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="shared/firebase-config.js"></script>
-<script src="shared/utils.js"></script>
-<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
-<script src="shared/realtime.js"></script>
-<script src="seller.js"></script>
-<script src="transport.js"></script>
-<script src="shared/chatbot.js"></script>
+  <!-- Runtime Environment Config -->
+  <script src="shared/env-config.js"></script>
 
-<!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="shared/firebase-config.js"></script>
+  <script src="shared/utils.js"></script>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script src="shared/realtime.js"></script>
+  <script src="seller.js"></script>
+  <script src="transport.js"></script>
+  <script src="shared/chatbot.js"></script>
+
+  <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
      PREMIUM UI ENHANCEMENTS a No logic changes
      aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
-<script>
-/* aaa Floating Particles on Login aaa */
-(function spawnParticles() {
-  var wrap = document.getElementById('particles-wrap');
-  if (!wrap) return;
-  var colors = ['#22c55e','#16a34a','#38bdf8','#4ade80','#a3e635'];
-  for (var i = 0; i < 18; i++) {
-    var p = document.createElement('div');
-    p.className = 'login-particle';
-    var size = Math.random() * 6 + 3;
-    var left = Math.random() * 100;
-    var dur  = Math.random() * 14 + 8;
-    var delay = Math.random() * 10;
-    p.style.cssText = [
-      'width:'+size+'px','height:'+size+'px',
-      'left:'+left+'%','bottom:-'+size+'px',
-      'background:'+colors[Math.floor(Math.random()*colors.length)],
-      'animation-duration:'+dur+'s',
-      'animation-delay:'+delay+'s'
-    ].join(';');
-    wrap.appendChild(p);
-  }
-})();
-
-/* aaa Mobile sidebar toggle aaa */
-function toggleSidebar() {
-  var s = document.getElementById('sidebar');
-  var o = document.getElementById('sidebar-overlay');
-  if (s) s.classList.toggle('open');
-  if (o) o.classList.toggle('active');
-}
-function closeSidebar() {
-  var s = document.getElementById('sidebar');
-  var o = document.getElementById('sidebar-overlay');
-  if (s) s.classList.remove('open');
-  if (o) o.classList.remove('active');
-}
-
-/* aaa Action overlay helpers (for long-running ops) aaa */
-window.showActionOverlay = function(title, sub) {
-  var el = document.getElementById('action-overlay');
-  if (el) {
-    document.getElementById('action-overlay-title').textContent = title || 'Processing...';
-    document.getElementById('action-overlay-sub').textContent   = sub   || 'Please wait, do not close this page.';
-    el.style.display = 'flex';
-  }
-};
-window.hideActionOverlay = function() {
-  var el = document.getElementById('action-overlay');
-  if (el) el.style.display = 'none';
-};
-
-/* aaa Login button states aaa */
-window._setLoginBusy = function(busy, msg) {
-  var btn = document.getElementById('login-btn');
-  var st  = document.getElementById('login-status');
-  var sm  = document.getElementById('login-status-msg');
-  var gb  = document.getElementById('google-btn');
-  if (!btn) return;
-  if (busy) {
-    btn.disabled = true;
-    btn.textContent = 'Signing in...';
-    if (gb) gb.disabled = true;
-    if (st) { st.style.display='flex'; st.className='status-bar loading active'; }
-    if (sm) sm.textContent = msg || 'Verifying credentials...';
-  } else {
-    btn.disabled = false;
-    btn.textContent = 'Enter seller workspace';
-    if (gb) gb.disabled = false;
-    if (st) st.style.display='none';
-  }
-};
-
-window._setLoginStatus = function(type, msg) {
-  var st = document.getElementById('login-status');
-  var sm = document.getElementById('login-status-msg');
-  if (!st) return;
-  st.style.display='flex';
-  st.className='status-bar '+type+' active';
-  if (sm) sm.textContent = msg;
-  if (type === 'success' || type === 'error') {
-    setTimeout(function(){ st.style.display='none'; }, 4000);
-  }
-};
-
-/* aaa Status bar helpers aaa */
-window.showStatusBar = function(id, msgId, type, msg, autohide) {
-  var bar = document.getElementById(id);
-  var msgEl = document.getElementById(msgId);
-  if (!bar) return;
-  bar.className = 'status-bar '+type+' active';
-  if (msgEl) msgEl.textContent = msg;
-  if (autohide) {
-    setTimeout(function(){ bar.className='status-bar'; }, autohide);
-  }
-};
-window.hideStatusBar = function(id) {
-  var bar = document.getElementById(id);
-  if (bar) bar.className='status-bar';
-};
-
-/* aaa Button loading helper aaa */
-window.setBtnLoading = function(btnId, loading, label) {
-  var btn = document.getElementById(btnId);
-  if (!btn) return;
-  if (loading) {
-    btn._orig = btn.innerHTML;
-    btn.disabled = true;
-    btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;"></span>' + (label || 'Processing...') + '</span>';
-  } else {
-    btn.disabled = false;
-    if (btn._orig) btn.innerHTML = btn._orig;
-  }
-};
-
-window._runWithNextToast = function(onDone, timeoutMs, fallbackMsg) {
-  var originalToast = window.toast;
-  if (typeof originalToast !== 'function') {
-    if (typeof onDone === 'function') {
-      onDone(false, fallbackMsg || 'Action completed. Please review the current screen.', 'warning');
-    }
-    return function() {};
-  }
-
-  var settled = false;
-  window.toast = function(message, type, duration) {
-    if (!settled) {
-      settled = true;
-      window.toast = originalToast;
-      if (typeof onDone === 'function') onDone(type === 'success', message, type || '');
-    }
-    return originalToast(message, type, duration);
-  };
-
-  if (timeoutMs) {
-    setTimeout(function() {
-      if (settled) return;
-      settled = true;
-      window.toast = originalToast;
-      if (typeof onDone === 'function') {
-        onDone(false, fallbackMsg || 'This is taking longer than expected. Please try again.', 'warning');
+  <script>
+    /* aaa Floating Particles on Login aaa */
+    (function spawnParticles() {
+      var wrap = document.getElementById('particles-wrap');
+      if (!wrap) return;
+      var colors = ['#22c55e', '#16a34a', '#38bdf8', '#4ade80', '#a3e635'];
+      for (var i = 0; i < 18; i++) {
+        var p = document.createElement('div');
+        p.className = 'login-particle';
+        var size = Math.random() * 6 + 3;
+        var left = Math.random() * 100;
+        var dur = Math.random() * 14 + 8;
+        var delay = Math.random() * 10;
+        p.style.cssText = [
+          'width:' + size + 'px', 'height:' + size + 'px',
+          'left:' + left + '%', 'bottom:-' + size + 'px',
+          'background:' + colors[Math.floor(Math.random() * colors.length)],
+          'animation-duration:' + dur + 's',
+          'animation-delay:' + delay + 's'
+        ].join(';');
+        wrap.appendChild(p);
       }
-    }, timeoutMs);
-  }
+    })();
 
-  return function() {
-    if (!settled) {
-      settled = true;
-      window.toast = originalToast;
+    /* aaa Mobile sidebar toggle aaa */
+    function toggleSidebar() {
+      var s = document.getElementById('sidebar');
+      var o = document.getElementById('sidebar-overlay');
+      if (s) s.classList.toggle('open');
+      if (o) o.classList.toggle('active');
     }
-  };
-};
-
-window._origHandleFileUpload = window.handleFileUpload;
-window._origHandleListingPhotos = window.handleListingPhotos;
-
-/* aaa Upload zone with real backend pass-through aaa */
-window.handleFileUpload = function(fileId, zoneId, pbarId) {
-  var input = document.getElementById(fileId);
-  var zone = document.getElementById(zoneId);
-  var pbar = pbarId ? document.getElementById(pbarId) : null;
-  var pwrap = pbar ? pbar.parentElement : null;
-  if (!input || !input.files || !input.files.length) return;
-
-  if (zone) zone.classList.add('uploading');
-  if (pwrap) pwrap.style.display = 'block';
-  if (pbar) pbar.style.width = '28%';
-
-  if (typeof window._origHandleFileUpload === 'function') {
-    window._origHandleFileUpload(fileId, zoneId);
-  }
-
-  var ticks = 0;
-  var iv = setInterval(function() {
-    ticks += 1;
-    var sub = zone ? zone.querySelector('.upload-sub') : null;
-    var copy = sub ? String(sub.textContent || '') : '';
-    var completed = /uploaded successfully|ready to submit/i.test(copy);
-    var failed = /upload failed|too large|could not read|try again/i.test(copy);
-
-    if (!completed && !failed && pbar) {
-      pbar.style.width = Math.min(92, 28 + ticks * 8) + '%';
+    function closeSidebar() {
+      var s = document.getElementById('sidebar');
+      var o = document.getElementById('sidebar-overlay');
+      if (s) s.classList.remove('open');
+      if (o) o.classList.remove('active');
     }
 
-    if (completed || failed || ticks > 18) {
-      clearInterval(iv);
-      if (zone) zone.classList.remove('uploading');
-      if (pbar) pbar.style.width = completed ? '100%' : '0';
-      if (pwrap && !completed) pwrap.style.display = 'none';
-    }
-  }, 240);
-};
-
-/* aaa Listing photo handler tied to the real uploader aaa */
-window.handleListingPhotos = function(input) {
-  if (!input || !input.files || !input.files.length) return;
-
-  var zone = document.getElementById('listing-photo-zone');
-  var pbar = document.getElementById('listing-pbar');
-  var pwrap = pbar ? pbar.parentElement : null;
-  var label = document.getElementById('listing-photo-label');
-  var preview = document.getElementById('listing-photo-preview');
-  var totalSelected = Math.min(input.files.length, 5);
-
-  if (zone) zone.classList.add('uploading');
-  if (pwrap) pwrap.style.display = 'block';
-  if (pbar) pbar.style.width = '18%';
-  if (label) label.textContent = 'Uploading ' + totalSelected + ' photo' + (totalSelected > 1 ? 's' : '') + '...';
-
-  if (typeof window._origHandleListingPhotos === 'function') {
-    window._origHandleListingPhotos(input);
-  }
-
-  var ticks = 0;
-  var iv = setInterval(function() {
-    ticks += 1;
-    var imgs = preview ? Array.from(preview.querySelectorAll('img')) : [];
-    var successCount = preview ? preview.querySelectorAll('img[data-url]').length : 0;
-    var failedCount = imgs.filter(function(img) { return !img.dataset.url && img.title === 'Upload failed'; }).length;
-    var finished = imgs.length > 0 && imgs.every(function(img) {
-      return !!img.dataset.url || img.title === 'Upload failed';
-    });
-
-    if (!finished && pbar) {
-      pbar.style.width = Math.min(94, 18 + ticks * 7) + '%';
-    }
-
-    if ((finished && imgs.length >= totalSelected) || ticks > 24) {
-      clearInterval(iv);
-      if (zone) {
-        zone.classList.remove('uploading');
-        zone.classList.toggle('uploaded', successCount > 0);
+    /* aaa Action overlay helpers (for long-running ops) aaa */
+    window.showActionOverlay = function (title, sub) {
+      var el = document.getElementById('action-overlay');
+      if (el) {
+        document.getElementById('action-overlay-title').textContent = title || 'Processing...';
+        document.getElementById('action-overlay-sub').textContent = sub || 'Please wait, do not close this page.';
+        el.style.display = 'flex';
       }
-      if (pbar) pbar.style.width = successCount > 0 ? '100%' : '0';
-      if (pwrap && successCount === 0) pwrap.style.display = 'none';
+    };
+    window.hideActionOverlay = function () {
+      var el = document.getElementById('action-overlay');
+      if (el) el.style.display = 'none';
+    };
 
-      if (label) {
-        if (successCount > 0 && failedCount > 0) {
-          label.textContent = successCount + ' photo' + (successCount > 1 ? 's' : '') + ' ready, ' + failedCount + ' need attention';
-        } else if (successCount > 0) {
-          label.textContent = successCount + ' photo' + (successCount > 1 ? 's' : '') + ' ready';
-        } else {
-          label.textContent = 'Upload clear product photos (up to 5)';
+    /* aaa Login button states aaa */
+    window._setLoginBusy = function (busy, msg) {
+      var btn = document.getElementById('login-btn');
+      var st = document.getElementById('login-status');
+      var sm = document.getElementById('login-status-msg');
+      var gb = document.getElementById('google-btn');
+      if (!btn) return;
+      if (busy) {
+        btn.disabled = true;
+        btn.textContent = 'Signing in...';
+        if (gb) gb.disabled = true;
+        if (st) { st.style.display = 'flex'; st.className = 'status-bar loading active'; }
+        if (sm) sm.textContent = msg || 'Verifying credentials...';
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'Enter seller workspace';
+        if (gb) gb.disabled = false;
+        if (st) st.style.display = 'none';
+      }
+    };
+
+    window._setLoginStatus = function (type, msg) {
+      var st = document.getElementById('login-status');
+      var sm = document.getElementById('login-status-msg');
+      if (!st) return;
+      st.style.display = 'flex';
+      st.className = 'status-bar ' + type + ' active';
+      if (sm) sm.textContent = msg;
+      if (type === 'success' || type === 'error') {
+        setTimeout(function () { st.style.display = 'none'; }, 4000);
+      }
+    };
+
+    /* aaa Status bar helpers aaa */
+    window.showStatusBar = function (id, msgId, type, msg, autohide) {
+      var bar = document.getElementById(id);
+      var msgEl = document.getElementById(msgId);
+      if (!bar) return;
+      bar.className = 'status-bar ' + type + ' active';
+      if (msgEl) msgEl.textContent = msg;
+      if (autohide) {
+        setTimeout(function () { bar.className = 'status-bar'; }, autohide);
+      }
+    };
+    window.hideStatusBar = function (id) {
+      var bar = document.getElementById(id);
+      if (bar) bar.className = 'status-bar';
+    };
+
+    /* aaa Button loading helper aaa */
+    window.setBtnLoading = function (btnId, loading, label) {
+      var btn = document.getElementById(btnId);
+      if (!btn) return;
+      if (loading) {
+        btn._orig = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;"></span>' + (label || 'Processing...') + '</span>';
+      } else {
+        btn.disabled = false;
+        if (btn._orig) btn.innerHTML = btn._orig;
+      }
+    };
+
+    window._runWithNextToast = function (onDone, timeoutMs, fallbackMsg) {
+      var originalToast = window.toast;
+      if (typeof originalToast !== 'function') {
+        if (typeof onDone === 'function') {
+          onDone(false, fallbackMsg || 'Action completed. Please review the current screen.', 'warning');
         }
+        return function () { };
       }
-    }
-  }, 240);
-};
 
-/* aaa KYC submit wrapper (add feedback) aaa */
-var _origSubmitKYC = window.submitKYC;
-window.submitKYC = function() {
-  var btn  = document.getElementById('kyc-submit-btn');
-  var bar  = document.getElementById('kyc-status-bar');
-  var bMsg = document.getElementById('kyc-status-bar-msg');
-  if (btn) { btn.disabled=true; btn._orig=btn.innerHTML; btn.innerHTML='<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;"></span>Uploading your documents...</span>'; }
-  if (bar)  { bar.className='status-bar loading active'; }
-  if (bMsg) { bMsg.textContent='Securely uploading your KYC documents...'; }
+      var settled = false;
+      window.toast = function (message, type, duration) {
+        if (!settled) {
+          settled = true;
+          window.toast = originalToast;
+          if (typeof onDone === 'function') onDone(type === 'success', message, type || '');
+        }
+        return originalToast(message, type, duration);
+      };
 
-  var done = function(ok, msg) {
-    if (btn) { btn.disabled=false; if(btn._orig) btn.innerHTML=btn._orig; }
-    if (bar)  { bar.className='status-bar '+(ok ? 'success' : 'error')+' active'; }
-    if (bMsg) { bMsg.textContent=msg; }
-    setTimeout(function(){ if(bar) bar.className='status-bar'; }, 5000);
-  };
+      if (timeoutMs) {
+        setTimeout(function () {
+          if (settled) return;
+          settled = true;
+          window.toast = originalToast;
+          if (typeof onDone === 'function') {
+            onDone(false, fallbackMsg || 'This is taking longer than expected. Please try again.', 'warning');
+          }
+        }, timeoutMs);
+      }
 
-  window._runWithNextToast(function(ok, msg) {
-    done(ok, msg);
-  }, 12000, 'KYC submission is taking longer than expected. Please review the status and try again if needed.');
-  if (_origSubmitKYC) _origSubmitKYC();
-};
+      return function () {
+        if (!settled) {
+          settled = true;
+          window.toast = originalToast;
+        }
+      };
+    };
 
-/* aaa Profile save wrapper aaa */
-var _origSaveProfile = window.saveProfile;
-window.saveProfile = function() {
-  var btn = document.getElementById('save-profile-btn');
-  if (btn) { btn.disabled=true; btn._orig=btn.innerHTML; btn.innerHTML='<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;"></span>Saving...</span>'; }
-  var bar  = document.getElementById('profile-status');
-  var bMsg = document.getElementById('profile-status-msg');
-  if (bar)  { bar.className='status-bar loading active'; }
-  if (bMsg) { bMsg.textContent='Saving your profile changes...'; }
+    window._origHandleFileUpload = window.handleFileUpload;
+    window._origHandleListingPhotos = window.handleListingPhotos;
 
-  var done = function(ok, msg) {
-    if (btn) { btn.disabled=false; if(btn._orig) btn.innerHTML=btn._orig; }
-    if (bar)  { bar.className='status-bar '+(ok ? 'success' : 'error')+' active'; }
-    if (bMsg) { bMsg.textContent=msg; }
-    setTimeout(function(){ if(bar) bar.className='status-bar'; }, 4500);
-  };
+    /* aaa Upload zone with real backend pass-through aaa */
+    window.handleFileUpload = function (fileId, zoneId, pbarId) {
+      var input = document.getElementById(fileId);
+      var zone = document.getElementById(zoneId);
+      var pbar = pbarId ? document.getElementById(pbarId) : null;
+      var pwrap = pbar ? pbar.parentElement : null;
+      if (!input || !input.files || !input.files.length) return;
 
-  window._runWithNextToast(function(ok, msg) {
-    done(ok, msg);
-  }, 10000, 'Profile save is taking longer than expected. Please check your latest changes.');
-  if (_origSaveProfile) _origSaveProfile();
-};
+      if (zone) zone.classList.add('uploading');
+      if (pwrap) pwrap.style.display = 'block';
+      if (pbar) pbar.style.width = '28%';
 
-/* aaa Listing submit wrapper aaa */
-var _origSubmitListing = window.submitListing;
-window.submitListing = function() {
-  var btn  = document.getElementById('listing-submit-btn');
-  var dBtn = document.getElementById('draft-btn');
-  var bar  = document.getElementById('listing-status');
-  var bMsg = document.getElementById('listing-status-msg');
+      if (typeof window._origHandleFileUpload === 'function') {
+        window._origHandleFileUpload(fileId, zoneId);
+      }
 
-  if (btn)  { btn.disabled=true; btn._orig=btn.innerHTML; btn.innerHTML='<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;"></span>Publishing your listing...</span>'; }
-  if (dBtn) { dBtn.disabled=true; }
-  if (bar)  { bar.className='status-bar loading active'; }
-  if (bMsg) { bMsg.textContent='Publishing your listing to the marketplace...'; }
+      var ticks = 0;
+      var iv = setInterval(function () {
+        ticks += 1;
+        var sub = zone ? zone.querySelector('.upload-sub') : null;
+        var copy = sub ? String(sub.textContent || '') : '';
+        var completed = /uploaded successfully|ready to submit/i.test(copy);
+        var failed = /upload failed|too large|could not read|try again/i.test(copy);
 
-  var done = function(ok, msg) {
-    if (btn)  { btn.disabled=false; if(btn._orig) btn.innerHTML=btn._orig; }
-    if (dBtn) { dBtn.disabled=false; }
-    if (bar)  { bar.className='status-bar '+(ok ? 'success' : 'error')+' active'; }
-    if (bMsg) { bMsg.textContent = msg; }
-    setTimeout(function(){ if(bar) bar.className='status-bar'; }, 6000);
-  };
+        if (!completed && !failed && pbar) {
+          pbar.style.width = Math.min(92, 28 + ticks * 8) + '%';
+        }
 
-  window._runWithNextToast(function(ok, msg) {
-    done(ok, msg);
-  }, 15000, 'Listing publish is taking longer than expected. Please verify your photos finished uploading and try again.');
-  if (_origSubmitListing) _origSubmitListing();
-};
+        if (completed || failed || ticks > 18) {
+          clearInterval(iv);
+          if (zone) zone.classList.remove('uploading');
+          if (pbar) pbar.style.width = completed ? '100%' : '0';
+          if (pwrap && !completed) pwrap.style.display = 'none';
+        }
+      }, 240);
+    };
 
-/* aaa Withdrawal wrapper aaa */
-var _origInitiateWithdrawal = window.initiateWithdrawal;
-window.initiateWithdrawal = function() {
-  var btn  = document.getElementById('withdraw-btn');
-  var bar  = document.getElementById('withdraw-status');
-  var bMsg = document.getElementById('withdraw-status-msg');
+    /* aaa Listing photo handler tied to the real uploader aaa */
+    window.handleListingPhotos = function (input) {
+      if (!input || !input.files || !input.files.length) return;
 
-  if (btn)  { btn.disabled=true; btn._orig=btn.innerHTML; btn.innerHTML='<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;"></span>Initiating transfer...</span>'; }
-  if (bar)  { bar.className='status-bar loading active'; }
-  if (bMsg) { bMsg.textContent='Contacting your bank. This may take a moment...'; }
+      var zone = document.getElementById('listing-photo-zone');
+      var pbar = document.getElementById('listing-pbar');
+      var pwrap = pbar ? pbar.parentElement : null;
+      var label = document.getElementById('listing-photo-label');
+      var preview = document.getElementById('listing-photo-preview');
+      var totalSelected = Math.min(input.files.length, 5);
 
-  var done = function(ok, msg) {
-    if (btn)  { btn.disabled=false; if(btn._orig) btn.innerHTML=btn._orig; }
-    if (bar)  { bar.className='status-bar '+(ok ? 'success' : 'error')+' active'; }
-    if (bMsg) { bMsg.textContent = msg; }
-    setTimeout(function(){ if(bar) bar.className='status-bar'; }, 6000);
-  };
+      if (zone) zone.classList.add('uploading');
+      if (pwrap) pwrap.style.display = 'block';
+      if (pbar) pbar.style.width = '18%';
+      if (label) label.textContent = 'Uploading ' + totalSelected + ' photo' + (totalSelected > 1 ? 's' : '') + '...';
 
-  window._runWithNextToast(function(ok, msg) {
-    done(ok, msg);
-  }, 12000, 'Withdrawal request is taking longer than expected. Please review the latest payout status.');
-  if (_origInitiateWithdrawal) _origInitiateWithdrawal();
-};
+      if (typeof window._origHandleListingPhotos === 'function') {
+        window._origHandleListingPhotos(input);
+      }
 
-/* aaa Login error display with shake animation aaa */
-window._showLoginError = function(msg) {
-  var el = document.getElementById('login-error');
-  if (!el) return;
-  el.innerHTML = msg;
-  el.classList.add('visible');
-  el.style.animation='none';
-  void el.offsetWidth; // reflow
-  el.style.animation='shake .3s ease';
-  window._setLoginBusy(false);
-};
+      var ticks = 0;
+      var iv = setInterval(function () {
+        ticks += 1;
+        var imgs = preview ? Array.from(preview.querySelectorAll('img')) : [];
+        var successCount = preview ? preview.querySelectorAll('img[data-url]').length : 0;
+        var failedCount = imgs.filter(function (img) { return !img.dataset.url && img.title === 'Upload failed'; }).length;
+        var finished = imgs.length > 0 && imgs.every(function (img) {
+          return !!img.dataset.url || img.title === 'Upload failed';
+        });
 
-/* aaa Override showLogin / showApp for transitions aaa */
-window._origShowLogin = window.showLogin;
-window.showLogin = function() {
-  var shell = document.getElementById('login-shell');
-  var app   = document.getElementById('app-shell');
-  if (shell) { shell.style.display='flex'; shell.style.animation='card-rise .4s ease'; }
-  if (app)   app.style.display='none';
-  if (window._origShowLogin) window._origShowLogin();
-};
+        if (!finished && pbar) {
+          pbar.style.width = Math.min(94, 18 + ticks * 7) + '%';
+        }
 
-/* aaa Smooth screen-in animation hook aaa */
-var _origNavigate = window.navigate;
-window.navigate = function(screen, el) {
-  closeSidebar();
-  if (_origNavigate) _origNavigate(screen, el);
-  /* Re-trigger screen animation */
-  var scr = document.getElementById('screen-'+screen);
-  if (scr) {
-    scr.style.animation='none';
-    void scr.offsetWidth;
-    scr.style.animation='screen-in .3s ease both';
-  }
-};
+        if ((finished && imgs.length >= totalSelected) || ticks > 24) {
+          clearInterval(iv);
+          if (zone) {
+            zone.classList.remove('uploading');
+            zone.classList.toggle('uploaded', successCount > 0);
+          }
+          if (pbar) pbar.style.width = successCount > 0 ? '100%' : '0';
+          if (pwrap && successCount === 0) pwrap.style.display = 'none';
 
-/* aaa Map dark tiles aaa */
-window._initDarkMap = function(containerId, lat, lng) {
-  if (typeof L === 'undefined') return;
-  var el = document.getElementById(containerId);
-  if (!el) return;
-  el.innerHTML = '';
-  var map = L.map(el, { zoomControl:true, attributionControl:true });
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution:'A OpenStreetMap',
-    maxZoom: 18
-  }).addTo(map);
-  map.setView([lat||20.5937, lng||78.9629], lat ? 13 : 5);
-  /* Apply dark filter via CSS class */
-  var pane = el.querySelector('.leaflet-tile-pane');
-  return map;
-};
-</script>
+          if (label) {
+            if (successCount > 0 && failedCount > 0) {
+              label.textContent = successCount + ' photo' + (successCount > 1 ? 's' : '') + ' ready, ' + failedCount + ' need attention';
+            } else if (successCount > 0) {
+              label.textContent = successCount + ' photo' + (successCount > 1 ? 's' : '') + ' ready';
+            } else {
+              label.textContent = 'Upload clear product photos (up to 5)';
+            }
+          }
+        }
+      }, 240);
+    };
+
+    /* aaa KYC submit wrapper (add feedback) aaa */
+    var _origSubmitKYC = window.submitKYC;
+    window.submitKYC = function () {
+      var btn = document.getElementById('kyc-submit-btn');
+      var bar = document.getElementById('kyc-status-bar');
+      var bMsg = document.getElementById('kyc-status-bar-msg');
+      if (btn) { btn.disabled = true; btn._orig = btn.innerHTML; btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;"></span>Uploading your documents...</span>'; }
+      if (bar) { bar.className = 'status-bar loading active'; }
+      if (bMsg) { bMsg.textContent = 'Securely uploading your KYC documents...'; }
+
+      var done = function (ok, msg) {
+        if (btn) { btn.disabled = false; if (btn._orig) btn.innerHTML = btn._orig; }
+        if (bar) { bar.className = 'status-bar ' + (ok ? 'success' : 'error') + ' active'; }
+        if (bMsg) { bMsg.textContent = msg; }
+        setTimeout(function () { if (bar) bar.className = 'status-bar'; }, 5000);
+      };
+
+      window._runWithNextToast(function (ok, msg) {
+        done(ok, msg);
+      }, 12000, 'KYC submission is taking longer than expected. Please review the status and try again if needed.');
+      if (_origSubmitKYC) _origSubmitKYC();
+    };
+
+    /* aaa Profile save wrapper aaa */
+    var _origSaveProfile = window.saveProfile;
+    window.saveProfile = function () {
+      var btn = document.getElementById('save-profile-btn');
+      if (btn) { btn.disabled = true; btn._orig = btn.innerHTML; btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;"></span>Saving...</span>'; }
+      var bar = document.getElementById('profile-status');
+      var bMsg = document.getElementById('profile-status-msg');
+      if (bar) { bar.className = 'status-bar loading active'; }
+      if (bMsg) { bMsg.textContent = 'Saving your profile changes...'; }
+
+      var done = function (ok, msg) {
+        if (btn) { btn.disabled = false; if (btn._orig) btn.innerHTML = btn._orig; }
+        if (bar) { bar.className = 'status-bar ' + (ok ? 'success' : 'error') + ' active'; }
+        if (bMsg) { bMsg.textContent = msg; }
+        setTimeout(function () { if (bar) bar.className = 'status-bar'; }, 4500);
+      };
+
+      window._runWithNextToast(function (ok, msg) {
+        done(ok, msg);
+      }, 10000, 'Profile save is taking longer than expected. Please check your latest changes.');
+      if (_origSaveProfile) _origSaveProfile();
+    };
+
+    /* aaa Listing submit wrapper aaa */
+    var _origSubmitListing = window.submitListing;
+    window.submitListing = function () {
+      var btn = document.getElementById('listing-submit-btn');
+      var dBtn = document.getElementById('draft-btn');
+      var bar = document.getElementById('listing-status');
+      var bMsg = document.getElementById('listing-status-msg');
+
+      if (btn) { btn.disabled = true; btn._orig = btn.innerHTML; btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;"></span>Publishing your listing...</span>'; }
+      if (dBtn) { dBtn.disabled = true; }
+      if (bar) { bar.className = 'status-bar loading active'; }
+      if (bMsg) { bMsg.textContent = 'Publishing your listing to the marketplace...'; }
+
+      var done = function (ok, msg) {
+        if (btn) { btn.disabled = false; if (btn._orig) btn.innerHTML = btn._orig; }
+        if (dBtn) { dBtn.disabled = false; }
+        if (bar) { bar.className = 'status-bar ' + (ok ? 'success' : 'error') + ' active'; }
+        if (bMsg) { bMsg.textContent = msg; }
+        setTimeout(function () { if (bar) bar.className = 'status-bar'; }, 6000);
+      };
+
+      window._runWithNextToast(function (ok, msg) {
+        done(ok, msg);
+      }, 15000, 'Listing publish is taking longer than expected. Please verify your photos finished uploading and try again.');
+      if (_origSubmitListing) _origSubmitListing();
+    };
+
+    /* aaa Withdrawal wrapper aaa */
+    var _origInitiateWithdrawal = window.initiateWithdrawal;
+    window.initiateWithdrawal = function () {
+      var btn = document.getElementById('withdraw-btn');
+      var bar = document.getElementById('withdraw-status');
+      var bMsg = document.getElementById('withdraw-status-msg');
+
+      if (btn) { btn.disabled = true; btn._orig = btn.innerHTML; btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;"></span>Initiating transfer...</span>'; }
+      if (bar) { bar.className = 'status-bar loading active'; }
+      if (bMsg) { bMsg.textContent = 'Contacting your bank. This may take a moment...'; }
+
+      var done = function (ok, msg) {
+        if (btn) { btn.disabled = false; if (btn._orig) btn.innerHTML = btn._orig; }
+        if (bar) { bar.className = 'status-bar ' + (ok ? 'success' : 'error') + ' active'; }
+        if (bMsg) { bMsg.textContent = msg; }
+        setTimeout(function () { if (bar) bar.className = 'status-bar'; }, 6000);
+      };
+
+      window._runWithNextToast(function (ok, msg) {
+        done(ok, msg);
+      }, 12000, 'Withdrawal request is taking longer than expected. Please review the latest payout status.');
+      if (_origInitiateWithdrawal) _origInitiateWithdrawal();
+    };
+
+    /* aaa Login error display with shake animation aaa */
+    window._showLoginError = function (msg) {
+      var el = document.getElementById('login-error');
+      if (!el) return;
+      el.innerHTML = msg;
+      el.classList.add('visible');
+      el.style.animation = 'none';
+      void el.offsetWidth; // reflow
+      el.style.animation = 'shake .3s ease';
+      window._setLoginBusy(false);
+    };
+
+    /* aaa Override showLogin / showApp for transitions aaa */
+    window._origShowLogin = window.showLogin;
+    window.showLogin = function () {
+      var shell = document.getElementById('login-shell');
+      var app = document.getElementById('app-shell');
+      if (shell) { shell.style.display = 'flex'; shell.style.animation = 'card-rise .4s ease'; }
+      if (app) app.style.display = 'none';
+      if (window._origShowLogin) window._origShowLogin();
+    };
+
+    /* aaa Smooth screen-in animation hook aaa */
+    var _origNavigate = window.navigate;
+    window.navigate = function (screen, el) {
+      closeSidebar();
+      if (_origNavigate) _origNavigate(screen, el);
+      /* Re-trigger screen animation */
+      var scr = document.getElementById('screen-' + screen);
+      if (scr) {
+        scr.style.animation = 'none';
+        void scr.offsetWidth;
+        scr.style.animation = 'screen-in .3s ease both';
+      }
+    };
+
+    /* aaa Map dark tiles aaa */
+    window._initDarkMap = function (containerId, lat, lng) {
+      if (typeof L === 'undefined') return;
+      var el = document.getElementById(containerId);
+      if (!el) return;
+      el.innerHTML = '';
+      var map = L.map(el, { zoomControl: true, attributionControl: true });
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'A OpenStreetMap',
+        maxZoom: 18
+      }).addTo(map);
+      map.setView([lat || 20.5937, lng || 78.9629], lat ? 13 : 5);
+      /* Apply dark filter via CSS class */
+      var pane = el.querySelector('.leaflet-tile-pane');
+      return map;
+    };
+  </script>
 
 </body>
-</html>
 
+</html>

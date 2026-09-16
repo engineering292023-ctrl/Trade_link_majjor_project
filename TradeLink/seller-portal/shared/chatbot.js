@@ -198,10 +198,14 @@
 
     try {
       let apiBase = 'http://localhost:8000';
-      if (typeof window.API_BASE === 'string' && window.API_BASE) {
+      if (typeof window.ENV_CONFIG !== 'undefined' && window.ENV_CONFIG && window.ENV_CONFIG.BACKEND_URL) {
+        apiBase = window.ENV_CONFIG.BACKEND_URL.replace(/\/api\/?$/, '').replace(/\/+$/, '');
+      } else if (typeof window.API_BASE === 'string' && window.API_BASE) {
         apiBase = window.API_BASE.replace(/\/api\/?$/, '').replace(/\/+$/, '');
       } else if (typeof window.API_BASE_URL === 'string' && window.API_BASE_URL) {
         apiBase = window.API_BASE_URL.replace(/\/api\/?$/, '').replace(/\/+$/, '');
+      } else if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+        apiBase = '';
       }
 
       const response = await fetch(`${apiBase}/api/ai/chat`, {

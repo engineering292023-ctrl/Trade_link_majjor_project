@@ -1,15 +1,13 @@
 # Environment & Secret files
 .env
-.env.local
-.env.development
-.env.production
+.env.*
+*.env
 backend/.env
+backend/.env.*
 backend/env
 env
 *.pem
 *.key
-!.env.example
-!backend/.env.example
 
 # Service Accounts & Firebase Credentials
 backend/service-account.json

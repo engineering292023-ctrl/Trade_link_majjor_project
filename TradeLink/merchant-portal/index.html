@@ -12,8 +12,10 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
 
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -33,8 +35,7 @@
     };
   </script>
 
-  <link rel="stylesheet" href="shared/premium.css">
-  <link rel="stylesheet" href="shared/chatbot.css">
+  <link rel="stylesheet" href="/shared/premium.css">
   <link rel="stylesheet" href="merchant-premium.css">
 
 </head>
@@ -43,617 +44,662 @@
 
 
 
-<div class="page">
+  <div class="page">
 
 
 
-  <!-- LOGIN SHELL -->
+    <!-- LOGIN SHELL -->
 
-  <div class="login-shell merchant-bg" id="login-shell">
-    <div class="auth-shell">
-      <div class="login-card">
-        <div class="login-brand" style="margin-bottom: 24px;">
-          <div class="login-logo">TL</div>
-          <div>
-            <div class="login-brand-name">TradeLink</div>
-            <div class="login-brand-tag">Merchant Portal</div>
+    <div class="login-shell merchant-bg" id="login-shell">
+      <div class="auth-shell">
+        <div class="login-card">
+          <div class="login-brand" style="margin-bottom: 24px;">
+            <div class="login-logo">TL</div>
+            <div>
+              <div class="login-brand-name">TradeLink</div>
+              <div class="login-brand-tag">Merchant Portal</div>
+            </div>
           </div>
-        </div>
 
-        <div class="auth-panel-head">
-          <div>
-            <h1 class="login-heading">Welcome back</h1>
-            <p class="login-subtext">
-              Sign in to browse live listings, place bids, and manage deals.
+          <div class="auth-panel-head">
+            <div>
+              <h1 class="login-heading">Welcome back</h1>
+              <p class="login-subtext">
+                Sign in to browse live listings, place bids, and manage deals.
+              </p>
+            </div>
+            <div class="auth-chip">Merchant</div>
+          </div>
+
+          <div class="login-error" id="login-error"></div>
+
+          <label class="login-label" for="email">Work email</label>
+          <input class="login-input" type="email" id="email" placeholder="you@company.com" autocomplete="email">
+
+          <label class="login-label" for="password">Password</label>
+          <input class="login-input" type="password" id="password" placeholder="Enter your password"
+            autocomplete="current-password">
+
+          <button class="btn primary lg full" id="login-btn" onclick="handleEmailLogin()">
+            Enter merchant workspace
+          </button>
+
+          <div class="status-bar loading" id="login-status" style="display:none;">
+            <div class="status-bar-spinner"></div>
+            <span id="login-status-msg">Checking your merchant access...</span>
+          </div>
+
+          <div class="divider"><span>or continue with</span></div>
+
+          <button class="btn-google" id="google-btn" onclick="handleGoogleLogin()">
+            <svg width="18" height="18" viewBox="0 0 18 18">
+              <path
+                d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-.66-.15-1.18z"
+                fill="#4285F4" />
+              <path d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 0 1-7.18-2.54H1.83v2.07A8 8 0 0 0 8.98 17z"
+                fill="#34A853" />
+              <path d="M4.5 10.52a4.8 4.8 0 0 1 0-3.04V5.41H1.83a8 8 0 0 0 0 7.18l2.67-2.07z" fill="#FBBC05" />
+              <path d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 1.83 5.4L4.5 7.49a4.77 4.77 0 0 1 4.48-3.3z"
+                fill="#EA4335" />
+            </svg>
+            Continue with Google
+          </button>
+
+          <div class="auth-link-stack">
+            <p class="login-footer">New buyer? <a href="#" onclick="handleRegister()">Create merchant account</a></p>
+            <p class="login-footer">Selling instead? <a href="../seller-portal/index.html">Open the seller portal</a>
             </p>
+            <p class="login-footer"><a href="#" onclick="showForgotPassword(); return false;">Forgot password?</a></p>
           </div>
-          <div class="auth-chip">Merchant</div>
-        </div>
-
-        <div class="login-error" id="login-error"></div>
-
-        <label class="login-label" for="email">Work email</label>
-        <input class="login-input" type="email" id="email" placeholder="you@company.com" autocomplete="email">
-
-        <label class="login-label" for="password">Password</label>
-        <input class="login-input" type="password" id="password" placeholder="Enter your password" autocomplete="current-password">
-
-        <button class="btn primary lg full" id="login-btn" onclick="handleEmailLogin()">
-          Enter merchant workspace
-        </button>
-
-        <div class="status-bar loading" id="login-status" style="display:none;">
-          <div class="status-bar-spinner"></div>
-          <span id="login-status-msg">Checking your merchant access...</span>
-        </div>
-
-        <div class="divider"><span>or continue with</span></div>
-
-        <button class="btn-google" id="google-btn" onclick="handleGoogleLogin()">
-          <svg width="18" height="18" viewBox="0 0 18 18">
-            <path d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-.66-.15-1.18z" fill="#4285F4"/>
-            <path d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 0 1-7.18-2.54H1.83v2.07A8 8 0 0 0 8.98 17z" fill="#34A853"/>
-            <path d="M4.5 10.52a4.8 4.8 0 0 1 0-3.04V5.41H1.83a8 8 0 0 0 0 7.18l2.67-2.07z" fill="#FBBC05"/>
-            <path d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 1.83 5.4L4.5 7.49a4.77 4.77 0 0 1 4.48-3.3z" fill="#EA4335"/>
-          </svg>
-          Continue with Google
-        </button>
-
-        <div class="auth-link-stack">
-          <p class="login-footer">New buyer? <a href="#" onclick="handleRegister()">Create merchant account</a></p>
-          <p class="login-footer">Selling instead? <a href="../seller-portal/index.html">Open the seller portal</a></p>
-          <p class="login-footer"><a href="#" onclick="showForgotPassword(); return false;">Forgot password?</a></p>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- APP SHELL -->
-  <div class="app-shell" id="app-shell" style="display:none;">
-    <button class="mobile-menu-btn btn" id="mobile-menu-btn" onclick="toggleSidebar()">Menu</button>
-    <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+    <!-- APP SHELL -->
+    <div class="app-shell" id="app-shell" style="display:none;">
+      <button class="mobile-menu-btn btn" id="mobile-menu-btn" onclick="toggleSidebar()">Menu</button>
+      <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
 
-    <!-- aa SIDEBAR aa -->
-    <aside class="sidebar" id="sidebar">
+      <!-- aa SIDEBAR aa -->
+      <aside class="sidebar" id="sidebar">
 
-      <div class="sidebar-brand">
-        <div class="sidebar-logo-icon">TL</div>
-        <div>
-          <div class="sidebar-name">TradeLink</div>
-          <div class="sidebar-sub">Merchant Portal</div>
-        </div>
-      </div>
-
-
-
-      <div class="sidebar-scroll">
-        <div class="nav-section">
-
-          <div class="nav-section-label">Marketplace</div>
-
-          <div class="nav-item active" onclick="navigate('marketplace', this)">
-
-            <span class="nav-icon">MKT</span> Marketplace
-
-          </div>
-
-          <div class="nav-item" onclick="navigate('my-bids', this)">
-
-            <span class="nav-icon">BID</span> My Bids
-
-            <span class="nav-badge info" id="nav-badge-bids">0</span>
-
-          </div>
-
-          <div class="nav-item" onclick="navigate('my-deals', this)">
-
-            <span class="nav-icon">DL</span> Deals
-
-          </div>
-
-          <div class="nav-item" onclick="navigate('watchlist', this)">
-
-            <span class="nav-icon">WCH</span> Watchlist
-
-            <span class="nav-badge info" id="nav-badge-watchlist">0</span>
-
-          </div>
-
-        </div>
-
-
-
-        <div class="nav-section">
-
-          <div class="nav-section-label">Finance</div>
-
-          <div class="nav-item" onclick="navigate('payments', this)">
-
-            <span class="nav-icon">PAY</span> Payments
-
-          </div>
-
-          <div class="nav-item" onclick="navigate('invoices', this)">
-
-            <span class="nav-icon">INV</span> Invoices
-
-          </div>
-
-        </div>
-
-
-
-        <div class="nav-section">
-
-          <div class="nav-section-label">Logistics</div>
-
-          <div class="nav-item" onclick="navigate('transport', this)">
-
-            <span class="nav-icon">TR</span> Transport Requests
-
-          </div>
-
-          <div class="nav-item" onclick="navigate('my-deliveries', this)">
-
-            <span class="nav-icon">DLV</span> My Deliveries
-
-          </div>
-
-          <div class="nav-item" onclick="navigate('my-vehicles', this)">
-
-            <span class="nav-icon">FLT</span> My Vehicles
-
-          </div>
-
-        </div>
-
-
-
-        <div class="nav-section">
-
-          <div class="nav-section-label">Account</div>
-
-          <div class="nav-item" onclick="navigate('profile', this)">
-
-            <span class="nav-icon">KY</span> Profile &amp; KYC
-
-          </div>
-
-          <div class="nav-item" onclick="navigate('help', this)">
-
-            <span class="nav-icon">HQ</span> Help &amp; Guide
-
-          </div>
-
-        </div>
-      </div>
-
-
-
-      <div class="sidebar-bottom">
-
-        <div class="user-pill" onclick="handleLogout()">
-
-          <div class="user-avatar" id="sidebar-avatar">MR</div>
-
+        <div class="sidebar-brand">
+          <div class="sidebar-logo-icon">TL</div>
           <div>
+            <div class="sidebar-name">TradeLink</div>
+            <div class="sidebar-sub">Merchant Portal</div>
+          </div>
+        </div>
 
-            <div class="user-name" id="sidebar-name">Loading...</div>
 
-            <div class="user-role" id="sidebar-role">Merchant</div>
+
+        <div class="sidebar-scroll">
+          <div class="nav-section">
+
+            <div class="nav-section-label">Marketplace</div>
+
+            <div class="nav-item active" onclick="navigate('marketplace', this)">
+
+              <span class="nav-icon">MKT</span> Marketplace
+
+            </div>
+
+            <div class="nav-item" onclick="navigate('my-bids', this)">
+
+              <span class="nav-icon">BID</span> My Bids
+
+              <span class="nav-badge info" id="nav-badge-bids">0</span>
+
+            </div>
+
+            <div class="nav-item" onclick="navigate('my-deals', this)">
+
+              <span class="nav-icon">DL</span> Deals
+
+            </div>
+
+            <div class="nav-item" onclick="navigate('watchlist', this)">
+
+              <span class="nav-icon">WCH</span> Watchlist
+
+              <span class="nav-badge info" id="nav-badge-watchlist">0</span>
+
+            </div>
 
           </div>
 
-          <button class="logout-btn" title="Sign out">OUT</button>
+
+
+          <div class="nav-section">
+
+            <div class="nav-section-label">Finance</div>
+
+            <div class="nav-item" onclick="navigate('payments', this)">
+
+              <span class="nav-icon">PAY</span> Payments
+
+            </div>
+
+            <div class="nav-item" onclick="navigate('invoices', this)">
+
+              <span class="nav-icon">INV</span> Invoices
+
+            </div>
+
+          </div>
+
+
+
+          <div class="nav-section">
+
+            <div class="nav-section-label">Logistics</div>
+
+            <div class="nav-item" onclick="navigate('transport', this)">
+
+              <span class="nav-icon">TR</span> Transport Requests
+
+            </div>
+
+            <div class="nav-item" onclick="navigate('my-deliveries', this)">
+
+              <span class="nav-icon">DLV</span> My Deliveries
+
+            </div>
+
+            <div class="nav-item" onclick="navigate('my-vehicles', this)">
+
+              <span class="nav-icon">FLT</span> My Vehicles
+
+            </div>
+
+          </div>
+
+
+
+          <div class="nav-section">
+
+            <div class="nav-section-label">Account</div>
+
+            <div class="nav-item" onclick="navigate('profile', this)">
+
+              <span class="nav-icon">KY</span> Profile &amp; KYC
+
+            </div>
+
+            <div class="nav-item" onclick="navigate('help', this)">
+
+              <span class="nav-icon">HQ</span> Help &amp; Guide
+
+            </div>
+
+          </div>
+        </div>
+
+
+
+        <div class="sidebar-bottom">
+
+          <div class="user-pill" onclick="handleLogout()">
+
+            <div class="user-avatar" id="sidebar-avatar">MR</div>
+
+            <div>
+
+              <div class="user-name" id="sidebar-name">Loading...</div>
+
+              <div class="user-role" id="sidebar-role">Merchant</div>
+
+            </div>
+
+            <button class="logout-btn" title="Sign out">OUT</button>
+
+          </div>
 
         </div>
 
-      </div>
-
-    </aside>
+      </aside>
 
 
 
-    <!-- aa MAIN CONTENT aa -->
+      <!-- aa MAIN CONTENT aa -->
 
-    <main class="content-area">
+      <main class="content-area">
 
 
 
-      <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
            SCREEN: MARKETPLACE / BROWSE
 
            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
 
-      <div id="screen-marketplace" class="screen active">
+        <div id="screen-marketplace" class="screen active">
 
-        <div class="topbar">
+          <div class="topbar">
 
-          <div>
+            <div>
 
-            <div class="topbar-title">Live marketplace</div>
+              <div class="topbar-title">Live marketplace</div>
 
-            <div class="topbar-sub">Review active supplier listings, compare pricing, and move quickly on the right opportunity.</div>
+              <div class="topbar-sub">Review active supplier listings, compare pricing, and move quickly on the right
+                opportunity.</div>
 
-          </div>
+            </div>
 
-          <div class="topbar-actions">
+            <div class="topbar-actions">
 
-            <div class="live-dot">Live auctions</div>
+              <div class="live-dot">Live auctions</div>
 
-          </div>
-
-        </div>
-
-
-
-        <!-- Stat row -->
-
-        <div class="grid-4 mb-20">
-
-          <div class="stat-card">
-
-            <span class="stat-icon">LIV</span>
-
-            <div class="stat-label">Live Listings</div>
-
-            <div class="stat-value loading" id="mkt-live-count">...</div>
+            </div>
 
           </div>
 
-          <div class="stat-card">
 
-            <span class="stat-icon">BID</span>
 
-            <div class="stat-label">My Active Bids</div>
+          <!-- Stat row -->
 
-            <div class="stat-value loading" id="mkt-active-bids">...</div>
+          <div class="grid-4 mb-20">
+
+            <div class="stat-card">
+
+              <span class="stat-icon">LIV</span>
+
+              <div class="stat-label">Live Listings</div>
+
+              <div class="stat-value loading" id="mkt-live-count">...</div>
+
+            </div>
+
+            <div class="stat-card">
+
+              <span class="stat-icon">BID</span>
+
+              <div class="stat-label">My Active Bids</div>
+
+              <div class="stat-value loading" id="mkt-active-bids">...</div>
+
+            </div>
+
+            <div class="stat-card">
+
+              <span class="stat-icon">WIN</span>
+
+              <div class="stat-label">Deals Won</div>
+
+              <div class="stat-value loading" id="mkt-deals-won">...</div>
+
+            </div>
+
+            <div class="stat-card">
+
+              <span class="stat-icon">SPN</span>
+
+              <div class="stat-label">Total Spent</div>
+
+              <div class="stat-value loading" id="mkt-total-spent">...</div>
+
+            </div>
 
           </div>
 
-          <div class="stat-card">
 
-            <span class="stat-icon">WIN</span>
 
-            <div class="stat-label">Deals Won</div>
+          <!-- Filters -->
 
-            <div class="stat-value loading" id="mkt-deals-won">...</div>
+          <div class="filter-bar">
+
+            <input class="filter-search" id="mkt-search" placeholder="Search product, seller, or location"
+              oninput="debouncedLoadMarketplace()">
+
+            <select class="filter-select" id="mkt-category" onchange="loadMarketplace()">
+
+              <option value="">All Categories</option>
+
+              <option>Agriculture / Farm Produce</option>
+
+              <option>Manufacturing / Industrial</option>
+
+              <option>Textiles &amp; Fabric</option>
+
+              <option>Food &amp; Processed</option>
+
+              <option>Handicrafts &amp; Artisans</option>
+
+              <option>Raw Materials</option>
+
+              <option>Electronics &amp; Components</option>
+
+              <option>Other</option>
+
+            </select>
+
+            <select class="filter-select" id="mkt-state" onchange="loadMarketplace()">
+
+              <option value="">All States</option>
+
+              <option>Andhra Pradesh</option>
+              <option>Assam</option>
+
+              <option>Bihar</option>
+              <option>Delhi</option>
+
+              <option>Gujarat</option>
+              <option>Haryana</option>
+
+              <option>Karnataka</option>
+              <option>Kerala</option>
+
+              <option>Madhya Pradesh</option>
+              <option>Maharashtra</option>
+
+              <option>Punjab</option>
+              <option>Rajasthan</option>
+
+              <option>Tamil Nadu</option>
+              <option>Telangana</option>
+
+              <option>Uttar Pradesh</option>
+              <option>West Bengal</option>
+
+            </select>
+
+            <select class="filter-select" id="mkt-sort" onchange="loadMarketplace()">
+
+              <option value="expires_asc">Closing Soon</option>
+
+              <option value="bids_desc">Most Bids</option>
+
+              <option value="price_asc">Price: Low to High</option>
+
+              <option value="created_desc">Newest First</option>
+
+            </select>
 
           </div>
 
-          <div class="stat-card">
 
-            <span class="stat-icon">SPN</span>
 
-            <div class="stat-label">Total Spent</div>
+          <!-- Category chips -->
 
-            <div class="stat-value loading" id="mkt-total-spent">...</div>
+          <div class="chip-bar" id="category-chips">
+
+            <div class="chip active" onclick="setChip(this,'')">All categories</div>
+
+            <div class="chip" onclick="setChip(this,'Agriculture / Farm Produce')">Agriculture</div>
+
+            <div class="chip" onclick="setChip(this,'Manufacturing / Industrial')">Manufacturing</div>
+
+            <div class="chip" onclick="setChip(this,'Textiles &amp; Fabric')">Textiles</div>
+
+            <div class="chip" onclick="setChip(this,'Food &amp; Processed')">Food</div>
+
+            <div class="chip" onclick="setChip(this,'Handicrafts &amp; Artisans')">Handicrafts</div>
+
+            <div class="chip" onclick="setChip(this,'Raw Materials')">Raw materials</div>
 
           </div>
 
-        </div>
 
 
+          <!-- Listing cards grid a injected by JS -->
 
-        <!-- Filters -->
+          <div class="listing-grid" id="marketplace-grid">
 
-        <div class="filter-bar">
+            <!-- Skeleton loaders shown while fetching -->
 
-          <input class="filter-search" id="mkt-search" placeholder="Search product, seller, or location" oninput="debouncedLoadMarketplace()">
+            <div class="listing-card" style="height:320px;background:var(--gray-100);animation:shimmer 1.4s infinite;">
+            </div>
 
-          <select class="filter-select" id="mkt-category" onchange="loadMarketplace()">
+            <div class="listing-card" style="height:320px;background:var(--gray-100);animation:shimmer 1.4s infinite;">
+            </div>
 
-            <option value="">All Categories</option>
+            <div class="listing-card" style="height:320px;background:var(--gray-100);animation:shimmer 1.4s infinite;">
+            </div>
 
-            <option>Agriculture / Farm Produce</option>
+          </div>
 
-            <option>Manufacturing / Industrial</option>
 
-            <option>Textiles &amp; Fabric</option>
 
-            <option>Food &amp; Processed</option>
+          <!-- Load more / pagination -->
 
-            <option>Handicrafts &amp; Artisans</option>
+          <div id="marketplace-pagination" style="margin-top:20px;"></div>
 
-            <option>Raw Materials</option>
+        </div><!-- end marketplace -->
 
-            <option>Electronics &amp; Components</option>
 
-            <option>Other</option>
 
-          </select>
 
-          <select class="filter-select" id="mkt-state" onchange="loadMarketplace()">
 
-            <option value="">All States</option>
-
-            <option>Andhra Pradesh</option><option>Assam</option>
-
-            <option>Bihar</option><option>Delhi</option>
-
-            <option>Gujarat</option><option>Haryana</option>
-
-            <option>Karnataka</option><option>Kerala</option>
-
-            <option>Madhya Pradesh</option><option>Maharashtra</option>
-
-            <option>Punjab</option><option>Rajasthan</option>
-
-            <option>Tamil Nadu</option><option>Telangana</option>
-
-            <option>Uttar Pradesh</option><option>West Bengal</option>
-
-          </select>
-
-          <select class="filter-select" id="mkt-sort" onchange="loadMarketplace()">
-
-            <option value="expires_asc">Closing Soon</option>
-
-            <option value="bids_desc">Most Bids</option>
-
-            <option value="price_asc">Price: Low to High</option>
-
-            <option value="created_desc">Newest First</option>
-
-          </select>
-
-        </div>
-
-
-
-        <!-- Category chips -->
-
-        <div class="chip-bar" id="category-chips">
-
-          <div class="chip active" onclick="setChip(this,'')">All categories</div>
-
-          <div class="chip" onclick="setChip(this,'Agriculture / Farm Produce')">Agriculture</div>
-
-          <div class="chip" onclick="setChip(this,'Manufacturing / Industrial')">Manufacturing</div>
-
-          <div class="chip" onclick="setChip(this,'Textiles &amp; Fabric')">Textiles</div>
-
-          <div class="chip" onclick="setChip(this,'Food &amp; Processed')">Food</div>
-
-          <div class="chip" onclick="setChip(this,'Handicrafts &amp; Artisans')">Handicrafts</div>
-
-          <div class="chip" onclick="setChip(this,'Raw Materials')">Raw materials</div>
-
-        </div>
-
-
-
-        <!-- Listing cards grid a injected by JS -->
-
-        <div class="listing-grid" id="marketplace-grid">
-
-          <!-- Skeleton loaders shown while fetching -->
-
-          <div class="listing-card" style="height:320px;background:var(--gray-100);animation:shimmer 1.4s infinite;"></div>
-
-          <div class="listing-card" style="height:320px;background:var(--gray-100);animation:shimmer 1.4s infinite;"></div>
-
-          <div class="listing-card" style="height:320px;background:var(--gray-100);animation:shimmer 1.4s infinite;"></div>
-
-        </div>
-
-
-
-        <!-- Load more / pagination -->
-
-        <div id="marketplace-pagination" style="margin-top:20px;"></div>
-
-      </div><!-- end marketplace -->
-
-
-
-
-
-      <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
            SCREEN: MY BIDS
 
            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
 
-      <div id="screen-my-bids" class="screen">
+        <div id="screen-my-bids" class="screen">
 
-        <div class="topbar">
+          <div class="topbar">
 
-          <div>
+            <div>
 
-            <div class="topbar-title">My Bids</div>
+              <div class="topbar-title">My Bids</div>
 
-            <div class="topbar-sub">All bids you've placed a won, outbid, and pending.</div>
+              <div class="topbar-sub">All bids you've placed a won, outbid, and pending.</div>
 
-          </div>
+            </div>
 
-          <div class="topbar-actions">
+            <div class="topbar-actions">
 
-            <button class="btn" onclick="loadMyBids()">Refresh</button>
+              <button class="btn" onclick="loadMyBids()">Refresh</button>
 
-          </div>
-
-        </div>
-
-
-
-        <div class="card">
-
-          <div class="filter-bar">
-
-            <select class="filter-select" id="bids-status-filter" onchange="loadMyBids()">
-
-              <option value="">All Bids</option>
-
-              <option value="live">Live (Still bidding)</option>
-
-              <option value="won">Won</option>
-
-              <option value="outbid">Outbid</option>
-
-            </select>
+            </div>
 
           </div>
 
-          <div class="table-wrap">
 
-            <table>
 
-              <thead>
+          <div class="card">
 
-                <tr>
+            <div class="filter-bar">
 
-                  <th>Listing</th>
+              <select class="filter-select" id="bids-status-filter" onchange="loadMyBids()">
 
-                  <th>Seller</th>
+                <option value="">All Bids</option>
 
-                  <th>My Bid (per unit)</th>
+                <option value="live">Live (Still bidding)</option>
 
-                  <th>Total Value</th>
+                <option value="won">Won</option>
 
-                  <th>Top Bid</th>
+                <option value="outbid">Outbid</option>
 
-                  <th>Auction Ends</th>
+              </select>
 
-                  <th>Status</th>
+            </div>
 
-                  <th>Action</th>
+            <div class="table-wrap">
 
-                </tr>
+              <table>
 
-              </thead>
+                <thead>
 
-              <tbody id="my-bids-tbody">
+                  <tr>
 
-                <tr><td colspan="8"><div class="empty-state"><div class="spinner"></div></div></td></tr>
+                    <th>Listing</th>
 
-              </tbody>
+                    <th>Seller</th>
 
-            </table>
+                    <th>My Bid (per unit)</th>
+
+                    <th>Total Value</th>
+
+                    <th>Top Bid</th>
+
+                    <th>Auction Ends</th>
+
+                    <th>Status</th>
+
+                    <th>Action</th>
+
+                  </tr>
+
+                </thead>
+
+                <tbody id="my-bids-tbody">
+
+                  <tr>
+                    <td colspan="8">
+                      <div class="empty-state">
+                        <div class="spinner"></div>
+                      </div>
+                    </td>
+                  </tr>
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+            <div id="my-bids-pagination"></div>
 
           </div>
 
-          <div id="my-bids-pagination"></div>
-
-        </div>
-
-      </div><!-- end my-bids -->
+        </div><!-- end my-bids -->
 
 
 
 
 
-      <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
            SCREEN: MY DEALS
 
            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
 
-      <div id="screen-my-deals" class="screen">
+        <div id="screen-my-deals" class="screen">
 
-        <div class="topbar">
+          <div class="topbar">
 
-          <div>
+            <div>
 
-            <div class="topbar-title">My Deals</div>
-            <div class="topbar-sub">Confirmed purchases a payment, delivery, and invoice status.</div>
+              <div class="topbar-title">My Deals</div>
+              <div class="topbar-sub">Confirmed purchases a payment, delivery, and invoice status.</div>
 
-          </div>
+            </div>
 
-          <div class="topbar-actions">
+            <div class="topbar-actions">
 
-            <button class="btn" onclick="loadMyDeals()">Refresh</button>
+              <button class="btn" onclick="loadMyDeals()">Refresh</button>
 
-          </div>
-
-        </div>
-
-
-
-        <div class="card">
-
-          <div class="filter-bar">
-
-            <select class="filter-select" id="deals-status-filter" onchange="loadMyDeals()">
-
-              <option value="">All Deals</option>
-
-              <option value="pay_pending">Payment Pending</option>
-
-              <option value="in_escrow">In Escrow</option>
-
-              <option value="in_transit">In Transit</option>
-
-              <option value="delivered">Delivered</option>
-
-            </select>
+            </div>
 
           </div>
 
-          <div class="table-wrap">
 
-            <table>
 
-              <thead>
+          <div class="card">
 
-                <tr>
+            <div class="filter-bar">
 
-                  <th>Deal ID</th>
+              <select class="filter-select" id="deals-status-filter" onchange="loadMyDeals()">
 
-                  <th>Product</th>
+                <option value="">All Deals</option>
 
-                  <th>Seller</th>
+                <option value="pay_pending">Payment Pending</option>
 
-                  <th>Amount</th>
+                <option value="in_escrow">In Escrow</option>
 
-                  <th>Pickup From</th>
+                <option value="in_transit">In Transit</option>
 
-                  <th>Delivery Status</th>
+                <option value="delivered">Delivered</option>
 
-                  <th>Payment</th>
+              </select>
 
-                  <th>Action</th>
+            </div>
 
-                </tr>
+            <div class="table-wrap">
 
-              </thead>
+              <table>
 
-              <tbody id="my-deals-tbody">
+                <thead>
 
-                <tr><td colspan="8"><div class="empty-state"><div class="spinner"></div></div></td></tr>
+                  <tr>
 
-              </tbody>
+                    <th>Deal ID</th>
 
-            </table>
+                    <th>Product</th>
+
+                    <th>Seller</th>
+
+                    <th>Amount</th>
+
+                    <th>Pickup From</th>
+
+                    <th>Delivery Status</th>
+
+                    <th>Payment</th>
+
+                    <th>Action</th>
+
+                  </tr>
+
+                </thead>
+
+                <tbody id="my-deals-tbody">
+
+                  <tr>
+                    <td colspan="8">
+                      <div class="empty-state">
+                        <div class="spinner"></div>
+                      </div>
+                    </td>
+                  </tr>
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+            <div id="my-deals-pagination"></div>
 
           </div>
 
-          <div id="my-deals-pagination"></div>
-
-        </div>
-
-      </div><!-- end my-deals -->
+        </div><!-- end my-deals -->
 
 
 
 
 
-      <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
            SCREEN: WATCHLIST
 
            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
 
-      <div id="screen-watchlist" class="screen">
+        <div id="screen-watchlist" class="screen">
 
-        <div class="topbar">
+          <div class="topbar">
 
-          <div>
+            <div>
 
-            <div class="topbar-title">Watchlist</div>
+              <div class="topbar-title">Watchlist</div>
 
-            <div class="topbar-sub">Listings you're monitoring a get alerted when top bid changes.</div>
+              <div class="topbar-sub">Listings you're monitoring a get alerted when top bid changes.</div>
+
+            </div>
+
+          </div>
+
+
+
+          <div id="watchlist-grid" class="listing-grid">
+
+            <div class="empty-state" style="grid-column:1/-1;">
+
+              <div class="spinner"></div>
+
+            </div>
 
           </div>
 
@@ -661,674 +707,666 @@
 
 
 
-        <div id="watchlist-grid" class="listing-grid">
-
-          <div class="empty-state" style="grid-column:1/-1;">
-
-            <div class="spinner"></div>
-
-          </div>
-
-        </div>
-
-      </div>
 
 
-
-
-
-      <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
            SCREEN: PAYMENTS
 
            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
 
-      <div id="screen-payments" class="screen">
+        <div id="screen-payments" class="screen">
 
-        <div class="topbar">
+          <div class="topbar">
 
-          <div>
+            <div>
 
-            <div class="topbar-title">Payments</div>
+              <div class="topbar-title">Payments</div>
 
-            <div class="topbar-sub">All payments you've made a escrow holds and released funds.</div>
+              <div class="topbar-sub">All payments you've made a escrow holds and released funds.</div>
 
-          </div>
-
-        </div>
-
-
-
-        <div class="grid-3 mb-20">
-
-          <div class="stat-card">
-
-            <div class="stat-label">Total Spent</div>
-
-            <div class="stat-value loading" id="pay-total-spent">...</div>
+            </div>
 
           </div>
 
-          <div class="stat-card">
-
-            <div class="stat-label">In Escrow (held)</div>
-
-            <div class="stat-value loading" id="pay-in-escrow">...</div>
-
-            <div class="stat-change">Released on delivery</div>
-
-          </div>
-
-          <div class="stat-card">
-
-            <div class="stat-label">Pending Payments</div>
-
-            <div class="stat-value loading" id="pay-pending">...</div>
-
-            <div class="stat-change">Must pay within 24h of winning</div>
-
-          </div>
-
-        </div>
 
 
+          <div class="grid-3 mb-20">
 
-        <!-- Pending payments a must pay section -->
+            <div class="stat-card">
 
-        <div id="pending-payments-section" style="display:none;">
+              <div class="stat-label">Total Spent</div>
 
-          <div class="banner warning">
+              <div class="stat-value loading" id="pay-total-spent">...</div>
 
-            <span class="banner-icon">as i </span>
+            </div>
 
-            <span class="banner-text">
+            <div class="stat-card">
 
-              <strong>Action required:</strong> You have pending payments. Pay within 24 hours or risk account suspension.
+              <div class="stat-label">In Escrow (held)</div>
 
-            </span>
+              <div class="stat-value loading" id="pay-in-escrow">...</div>
+
+              <div class="stat-change">Released on delivery</div>
+
+            </div>
+
+            <div class="stat-card">
+
+              <div class="stat-label">Pending Payments</div>
+
+              <div class="stat-value loading" id="pay-pending">...</div>
+
+              <div class="stat-change">Must pay within 24h of winning</div>
+
+            </div>
 
           </div>
 
-          <div id="pending-payments-list" class="mb-20"></div>
-
-        </div>
 
 
+          <!-- Pending payments a must pay section -->
 
-        <div class="card">
+          <div id="pending-payments-section" style="display:none;">
 
-          <div class="card-title mb-16">Payment History</div>
+            <div class="banner warning">
 
-          <div class="table-wrap">
+              <span class="banner-icon">as i </span>
 
-            <table>
+              <span class="banner-text">
 
-              <thead>
+                <strong>Action required:</strong> You have pending payments. Pay within 24 hours or risk account
+                suspension.
 
-                <tr>
+              </span>
 
-                  <th>Date</th>
+            </div>
 
-                  <th>Deal</th>
-
-                  <th>Product</th>
-
-                  <th>Amount</th>
-
-                  <th>Payment ID</th>
-
-                  <th>Status</th>
-
-                </tr>
-
-              </thead>
-
-              <tbody id="payments-tbody">
-
-                <tr><td colspan="6"><div class="empty-state"><div class="spinner"></div></div></td></tr>
-
-              </tbody>
-
-            </table>
+            <div id="pending-payments-list" class="mb-20"></div>
 
           </div>
 
-          <div id="payments-pagination"></div>
-
-        </div>
-
-      </div><!-- end payments -->
 
 
+          <div class="card">
+
+            <div class="card-title mb-16">Payment History</div>
+
+            <div class="table-wrap">
+
+              <table>
+
+                <thead>
+
+                  <tr>
+
+                    <th>Date</th>
+
+                    <th>Deal</th>
+
+                    <th>Product</th>
+
+                    <th>Amount</th>
+
+                    <th>Payment ID</th>
+
+                    <th>Status</th>
+
+                  </tr>
+
+                </thead>
+
+                <tbody id="payments-tbody">
+
+                  <tr>
+                    <td colspan="6">
+                      <div class="empty-state">
+                        <div class="spinner"></div>
+                      </div>
+                    </td>
+                  </tr>
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+            <div id="payments-pagination"></div>
+
+          </div>
+
+        </div><!-- end payments -->
 
 
 
-      <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+
+        <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
            SCREEN: INVOICES
 
            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
 
-      <div id="screen-invoices" class="screen">
+        <div id="screen-invoices" class="screen">
 
-        <div class="topbar">
+          <div class="topbar">
 
-          <div>
+            <div>
 
-            <div class="topbar-title">Invoices</div>
+              <div class="topbar-title">Invoices</div>
 
-            <div class="topbar-sub">Download GST invoices for all completed deals.</div>
+              <div class="topbar-sub">Download GST invoices for all completed deals.</div>
 
-          </div>
-
-        </div>
-
-
-
-        <div class="card">
-
-          <div class="table-wrap">
-
-            <table>
-
-              <thead>
-
-                <tr>
-
-                  <th>Invoice #</th>
-
-                  <th>Date</th>
-
-                  <th>Deal</th>
-
-                  <th>Product</th>
-
-                  <th>Amount</th>
-
-                  <th>GST</th>
-
-                  <th>Download</th>
-
-                </tr>
-
-              </thead>
-
-              <tbody id="invoices-tbody">
-
-                <tr><td colspan="7"><div class="empty-state"><div class="spinner"></div></div></td></tr>
-
-              </tbody>
-
-            </table>
+            </div>
 
           </div>
 
-        </div>
-
-      </div><!-- end invoices -->
 
 
+          <div class="card">
+
+            <div class="table-wrap">
+
+              <table>
+
+                <thead>
+
+                  <tr>
+
+                    <th>Invoice #</th>
+
+                    <th>Date</th>
+
+                    <th>Deal</th>
+
+                    <th>Product</th>
+
+                    <th>Amount</th>
+
+                    <th>GST</th>
+
+                    <th>Download</th>
+
+                  </tr>
+
+                </thead>
+
+                <tbody id="invoices-tbody">
+
+                  <tr>
+                    <td colspan="7">
+                      <div class="empty-state">
+                        <div class="spinner"></div>
+                      </div>
+                    </td>
+                  </tr>
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        </div><!-- end invoices -->
 
 
 
-      <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+
+        <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
            SCREEN: PROFILE & KYC
 
            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
 
-      <div id="screen-profile" class="screen">
+        <div id="screen-profile" class="screen">
 
-        <div class="topbar">
+          <div class="topbar">
 
-          <div>
+            <div>
 
-            <div class="topbar-title">Profile &amp; KYC</div>
+              <div class="topbar-title">Profile &amp; KYC</div>
 
-            <div class="topbar-sub">Verify your account to place bids and make payments.</div>
-
-          </div>
-
-        </div>
-
-
-
-        <div class="grid-main">
-
-          <div>
-
-            <div class="card mb-20">
-
-              <div class="card-title mb-16">Business Information</div>
-
-              <form id="profile-form">
-
-                <div class="form-row">
-
-                  <div class="form-group">
-
-                    <label>Full Name <span class="req">*</span></label>
-
-                    <input type="text" class="form-control" id="p-name" placeholder="Your full name">
-
-                  </div>
-
-                  <div class="form-group">
-
-                    <label>Company / Business Name</label>
-
-                    <input type="text" class="form-control" id="p-biz-name" placeholder="Your company">
-
-                  </div>
-
-                </div>
-
-                <div class="form-row">
-
-                  <div class="form-group">
-
-                    <label>Phone</label>
-
-                    <input type="tel" class="form-control" id="p-phone" readonly>
-
-                  </div>
-
-                  <div class="form-group">
-
-                    <label>Email</label>
-
-                    <input type="email" class="form-control" id="p-email" readonly>
-
-                  </div>
-
-                </div>
-
-                <div class="form-row">
-
-                  <div class="form-group">
-
-                    <label>City</label>
-
-                    <input type="text" class="form-control" id="p-city" placeholder="Your city">
-
-                  </div>
-
-                  <div class="form-group">
-
-                    <label>State</label>
-
-                    <select class="form-control" id="p-state">
-
-                      <option value="">Select state</option>
-
-                      <option>Andhra Pradesh</option><option>Assam</option>
-
-                      <option>Bihar</option><option>Delhi</option>
-
-                      <option>Gujarat</option><option>Haryana</option>
-
-                      <option>Karnataka</option><option>Kerala</option>
-
-                      <option>Madhya Pradesh</option><option>Maharashtra</option>
-
-                      <option>Punjab</option><option>Rajasthan</option>
-
-                      <option>Tamil Nadu</option><option>Telangana</option>
-
-                      <option>Uttar Pradesh</option><option>West Bengal</option>
-
-                      <option>Other</option>
-
-                    </select>
-
-                  </div>
-
-                </div>
-
-                <button type="button" class="btn primary" onclick="saveProfile()">Save Changes</button>
-
-              </form>
+              <div class="topbar-sub">Verify your account to place bids and make payments.</div>
 
             </div>
 
+          </div>
 
 
-            <div class="card">
 
-              <div class="card-title mb-8">KYC Documents</div>
+          <div class="grid-main">
 
-              <p style="font-size:13px;color:var(--gray-500);margin-bottom:18px;">
+            <div>
 
-                Required to place bids above a110,000 and make payments.
+              <div class="card mb-20">
 
-              </p>
+                <div class="card-title mb-16">Business Information</div>
 
-              <form id="kyc-form">
+                <form id="profile-form">
 
-                <div class="form-row">
+                  <div class="form-row">
 
-                  <div class="form-group">
+                    <div class="form-group">
 
-                    <label>GST Number <span class="req">*</span></label>
+                      <label>Full Name <span class="req">*</span></label>
 
-                    <input type="text" class="form-control" id="kyc-gst" placeholder="27ABCDE1234F1Z5">
-
-                  </div>
-
-                  <div class="form-group">
-
-                    <label>PAN Number <span class="req">*</span></label>
-
-                    <input type="text" class="form-control" id="kyc-pan" placeholder="ABCDE1234F">
-
-                  </div>
-
-                </div>
-
-                <div class="form-row">
-
-                  <div>
-
-                    <div class="upload-zone" onclick="triggerUpload('gst-cert-file')" id="gst-zone">
-
-                      <div class="upload-icon">DOC</div>
-
-                      <div class="upload-label">Upload GST Certificate</div>
-
-                      <div class="upload-sub">PDF, JPG or PNG A Max 5MB</div>
+                      <input type="text" class="form-control" id="p-name" placeholder="Your full name">
 
                     </div>
 
-                    <input type="file" id="gst-cert-file" style="display:none;" accept=".jpg,.png,.pdf" onchange="handleFileUpload('gst-cert-file','gst-zone')">
+                    <div class="form-group">
 
-                  </div>
+                      <label>Company / Business Name</label>
 
-                  <div>
-
-                    <div class="upload-zone" onclick="triggerUpload('pan-file')" id="pan-zone">
-
-                      <div class="upload-icon">DOC</div>
-
-                      <div class="upload-label">Upload PAN Card</div>
-
-                      <div class="upload-sub">JPG, PNG or PDF A Max 5MB</div>
+                      <input type="text" class="form-control" id="p-biz-name" placeholder="Your company">
 
                     </div>
 
-                    <input type="file" id="pan-file" style="display:none;" accept=".jpg,.png,.pdf" onchange="handleFileUpload('pan-file','pan-zone')">
+                  </div>
+
+                  <div class="form-row">
+
+                    <div class="form-group">
+
+                      <label>Phone</label>
+
+                      <input type="tel" class="form-control" id="p-phone" readonly>
+
+                    </div>
+
+                    <div class="form-group">
+
+                      <label>Email</label>
+
+                      <input type="email" class="form-control" id="p-email" readonly>
+
+                    </div>
 
                   </div>
 
-                </div>
+                  <div class="form-row">
 
-                <button type="button" class="btn primary" style="margin-top:12px;" onclick="submitKYC()">
+                    <div class="form-group">
 
-                  Submit KYC Documents
+                      <label>City</label>
 
-                </button>
+                      <input type="text" class="form-control" id="p-city" placeholder="Your city">
 
-              </form>
+                    </div>
+
+                    <div class="form-group">
+
+                      <label>State</label>
+
+                      <select class="form-control" id="p-state">
+
+                        <option value="">Select state</option>
+
+                        <option>Andhra Pradesh</option>
+                        <option>Assam</option>
+
+                        <option>Bihar</option>
+                        <option>Delhi</option>
+
+                        <option>Gujarat</option>
+                        <option>Haryana</option>
+
+                        <option>Karnataka</option>
+                        <option>Kerala</option>
+
+                        <option>Madhya Pradesh</option>
+                        <option>Maharashtra</option>
+
+                        <option>Punjab</option>
+                        <option>Rajasthan</option>
+
+                        <option>Tamil Nadu</option>
+                        <option>Telangana</option>
+
+                        <option>Uttar Pradesh</option>
+                        <option>West Bengal</option>
+
+                        <option>Other</option>
+
+                      </select>
+
+                    </div>
+
+                  </div>
+
+                  <button type="button" class="btn primary" onclick="saveProfile()">Save Changes</button>
+
+                </form>
+
+              </div>
+
+
+
+              <div class="card">
+
+                <div class="card-title mb-8">KYC Documents</div>
+
+                <p style="font-size:13px;color:var(--gray-500);margin-bottom:18px;">
+
+                  Required to place bids above a110,000 and make payments.
+
+                </p>
+
+                <form id="kyc-form">
+
+                  <div class="form-row">
+
+                    <div class="form-group">
+
+                      <label>GST Number <span class="req">*</span></label>
+
+                      <input type="text" class="form-control" id="kyc-gst" placeholder="27ABCDE1234F1Z5">
+
+                    </div>
+
+                    <div class="form-group">
+
+                      <label>PAN Number <span class="req">*</span></label>
+
+                      <input type="text" class="form-control" id="kyc-pan" placeholder="ABCDE1234F">
+
+                    </div>
+
+                  </div>
+
+                  <div class="form-row">
+
+                    <div>
+
+                      <div class="upload-zone" onclick="triggerUpload('gst-cert-file')" id="gst-zone">
+
+                        <div class="upload-icon">DOC</div>
+
+                        <div class="upload-label">Upload GST Certificate</div>
+
+                        <div class="upload-sub">PDF, JPG or PNG A Max 5MB</div>
+
+                      </div>
+
+                      <input type="file" id="gst-cert-file" style="display:none;" accept=".jpg,.png,.pdf"
+                        onchange="handleFileUpload('gst-cert-file','gst-zone')">
+
+                    </div>
+
+                    <div>
+
+                      <div class="upload-zone" onclick="triggerUpload('pan-file')" id="pan-zone">
+
+                        <div class="upload-icon">DOC</div>
+
+                        <div class="upload-label">Upload PAN Card</div>
+
+                        <div class="upload-sub">JPG, PNG or PDF A Max 5MB</div>
+
+                      </div>
+
+                      <input type="file" id="pan-file" style="display:none;" accept=".jpg,.png,.pdf"
+                        onchange="handleFileUpload('pan-file','pan-zone')">
+
+                    </div>
+
+                  </div>
+
+                  <button type="button" class="btn primary" style="margin-top:12px;" onclick="submitKYC()">
+
+                    Submit KYC Documents
+
+                  </button>
+
+                </form>
+
+              </div>
+
+            </div>
+
+
+
+            <!-- KYC Status -->
+
+            <div class="card" style="height:fit-content;">
+
+              <div class="card-title mb-16">Verification Status</div>
+
+              <div id="kyc-status-list">
+
+                <div class="spinner" style="margin:20px auto;display:block;"></div>
+
+              </div>
 
             </div>
 
           </div>
 
-
-
-          <!-- KYC Status -->
-
-          <div class="card" style="height:fit-content;">
-
-            <div class="card-title mb-16">Verification Status</div>
-
-            <div id="kyc-status-list">
-
-              <div class="spinner" style="margin:20px auto;display:block;"></div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div><!-- end profile -->
+        </div><!-- end profile -->
 
 
 
 
 
-      <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
            SCREEN: NOTIFICATIONS
 
            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
-      <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
            SCREEN: HELP
 
            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
 
-      <div id="screen-help" class="screen">
+        <div id="screen-help" class="screen">
 
-        <div class="topbar">
+          <div class="topbar">
 
-          <div>
+            <div>
 
-            <div class="topbar-title">Help &amp; Guide</div>
+              <div class="topbar-title">Help &amp; Guide</div>
 
-            <div class="topbar-sub">Everything you need to source smarter on TradeLink.</div>
+              <div class="topbar-sub">Everything you need to source smarter on TradeLink.</div>
+
+            </div>
+
+          </div>
+
+          <div class="help-grid">
+
+            <div class="help-card">
+
+              <div class="help-card-icon">BUY</div>
+
+              <div class="help-card-title">How to Browse Listings</div>
+
+              <div class="help-card-desc">Filter by category, state, or price. Cards show time remaining, current top
+                bid, quantity, and seller rating.</div>
+
+            </div>
+
+            <div class="help-card">
+
+              <div class="help-card-icon">BID</div>
+
+              <div class="help-card-title">How to Place a Bid</div>
+
+              <div class="help-card-desc">Enter your price per unit. Your bid must be at or above the seller's minimum.
+                You can outbid yourself if needed.</div>
+
+            </div>
+
+            <div class="help-card">
+
+              <div class="help-card-icon">Y3</div>
+
+              <div class="help-card-title">Winning &amp; Payment</div>
+
+              <div class="help-card-desc">If you win, you have 24 hours to pay via Razorpay. Payment goes into escrow a
+                released to seller only after delivery.</div>
+
+            </div>
+
+            <div class="help-card">
+
+              <div class="help-card-icon">SAFE</div>
+
+              <div class="help-card-title">Escrow Protection</div>
+
+              <div class="help-card-desc">Your money is always protected. If seller doesn't deliver, you get a full
+                refund. Zero risk once you pay through TradeLink.</div>
+
+            </div>
+
+            <div class="help-card">
+
+              <div class="help-card-icon">KYC</div>
+
+              <div class="help-card-title">GST Invoices</div>
+
+              <div class="help-card-desc">Auto-generated GST-compliant invoice for every deal. Download from the
+                Invoices section for your records.</div>
+
+            </div>
+
+            <div class="help-card">
+
+              <div class="help-card-icon">SUP</div>
+
+              <div class="help-card-title">Contact Support</div>
+
+              <div class="help-card-desc">WhatsApp: +91 88888 00000 A Email: <a href="/cdn-cgi/l/email-protection"
+                  class="__cf_email__" data-cfemail="e088858c90a094928184858c898e8bce819090">[email&#160;protected]</a>
+                A Available MonaSat 9 AM to 6 PM.</div>
+
+            </div>
 
           </div>
 
         </div>
 
-        <div class="help-grid">
 
-          <div class="help-card">
 
-            <div class="help-card-icon">BUY</div>
 
-            <div class="help-card-title">How to Browse Listings</div>
-
-            <div class="help-card-desc">Filter by category, state, or price. Cards show time remaining, current top bid, quantity, and seller rating.</div>
-
+        <!-- TRANSPORT MARKETPLACE SCREEN -->
+        <div id="screen-transport" class="screen">
+          <div class="topbar">
+            <div class="topbar-title">Transport requests</div>
+            <div class="topbar-sub">Review open requests from sellers, submit your best quote, and manage bookings with
+              less friction.</div>
           </div>
-
-          <div class="help-card">
-
-            <div class="help-card-icon">BID</div>
-
-            <div class="help-card-title">How to Place a Bid</div>
-
-            <div class="help-card-desc">Enter your price per unit. Your bid must be at or above the seller's minimum. You can outbid yourself if needed.</div>
-
+          <div class="screen-body">
+            <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:10px;margin-bottom:16px;">
+              <input class="form-control" type="text" id="tr-filter-from" placeholder="From city (e.g. Bengaluru)"
+                style="margin:0;">
+              <input class="form-control" type="text" id="tr-filter-to" placeholder="To city (e.g. Mumbai)"
+                style="margin:0;">
+              <button class="btn primary" onclick="loadTransportMarketplace()">Search</button>
+            </div>
+            <div id="transport-market-list"></div>
           </div>
-
-          <div class="help-card">
-
-            <div class="help-card-icon">Y3</div>
-
-            <div class="help-card-title">Winning &amp; Payment</div>
-
-            <div class="help-card-desc">If you win, you have 24 hours to pay via Razorpay. Payment goes into escrow a released to seller only after delivery.</div>
-
-          </div>
-
-          <div class="help-card">
-
-            <div class="help-card-icon">SAFE</div>
-
-            <div class="help-card-title">Escrow Protection</div>
-
-            <div class="help-card-desc">Your money is always protected. If seller doesn't deliver, you get a full refund. Zero risk once you pay through TradeLink.</div>
-
-          </div>
-
-          <div class="help-card">
-
-            <div class="help-card-icon">KYC</div>
-
-            <div class="help-card-title">GST Invoices</div>
-
-            <div class="help-card-desc">Auto-generated GST-compliant invoice for every deal. Download from the Invoices section for your records.</div>
-
-          </div>
-
-          <div class="help-card">
-
-            <div class="help-card-icon">SUP</div>
-
-            <div class="help-card-title">Contact Support</div>
-
-            <div class="help-card-desc">WhatsApp: +91 88888 00000 A Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e088858c90a094928184858c898e8bce819090">[email&#160;protected]</a> A Available MonaSat 9 AM to 6 PM.</div>
-
-          </div>
-
         </div>
 
-      </div>
-
-
-
-    
-      <!-- TRANSPORT MARKETPLACE SCREEN -->
-      <div id="screen-transport" class="screen">
-        <div class="topbar">
-          <div class="topbar-title">Transport requests</div>
-          <div class="topbar-sub">Review open requests from sellers, submit your best quote, and manage bookings with less friction.</div>
-        </div>
-        <div class="screen-body">
-          <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:10px;margin-bottom:16px;">
-            <input class="form-control" type="text" id="tr-filter-from"
-              placeholder="From city (e.g. Bengaluru)" style="margin:0;">
-            <input class="form-control" type="text" id="tr-filter-to"
-              placeholder="To city (e.g. Mumbai)" style="margin:0;">
-            <button class="btn primary" onclick="loadTransportMarketplace()">Search</button>
+        <!-- MY DELIVERIES SCREEN -->
+        <div id="screen-my-deliveries" class="screen">
+          <div class="topbar">
+            <div class="topbar-title">My deliveries</div>
+            <div class="topbar-sub">Track active bookings, update delivery status, and review location progress from one
+              screen.</div>
           </div>
-          <div id="transport-market-list"></div>
+          <div class="screen-body">
+            <div id="my-deliveries-list"></div>
+          </div>
         </div>
-      </div>
 
-      <!-- MY DELIVERIES SCREEN -->
-      <div id="screen-my-deliveries" class="screen">
-        <div class="topbar">
-          <div class="topbar-title">My deliveries</div>
-          <div class="topbar-sub">Track active bookings, update delivery status, and review location progress from one screen.</div>
+        <!-- MY VEHICLES SCREEN -->
+        <div id="screen-my-vehicles" class="screen">
+          <div class="topbar">
+            <div class="topbar-title">My vehicles</div>
+            <div class="topbar-sub">Register vehicles, manage availability, and keep fleet details organised for
+              transport bidding.</div>
+          </div>
+          <div class="screen-body">
+            <div id="my-vehicles-list"></div>
+          </div>
         </div>
-        <div class="screen-body">
-          <div id="my-deliveries-list"></div>
-        </div>
-      </div>
 
-      <!-- MY VEHICLES SCREEN -->
-      <div id="screen-my-vehicles" class="screen">
-        <div class="topbar">
-          <div class="topbar-title">My vehicles</div>
-          <div class="topbar-sub">Register vehicles, manage availability, and keep fleet details organised for transport bidding.</div>
-        </div>
-        <div class="screen-body">
-          <div id="my-vehicles-list"></div>
-        </div>
-      </div>
+      </main>
 
-</main>
+    </div><!-- end app-shell -->
 
-  </div><!-- end app-shell -->
-
-</div><!-- end page -->
+  </div><!-- end page -->
 
 
 
 
 
-<!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
      SHARED MODAL
 
      aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
 
-<div class="overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="overlay" id="modal-overlay" onclick="closeModal(event)">
 
-  <div class="modal wide" onclick="event.stopPropagation()">
+    <div class="modal wide" onclick="event.stopPropagation()">
 
-    <div class="modal-header">
+      <div class="modal-header">
 
-      <div>
+        <div>
 
-        <div class="modal-title" id="modal-title"></div>
+          <div class="modal-title" id="modal-title"></div>
 
-        <div class="modal-sub"   id="modal-sub"></div>
+          <div class="modal-sub" id="modal-sub"></div>
+
+        </div>
+
+        <div style="display:flex;align-items:center;gap:8px;">
+
+          <span id="modal-badge" class="badge brand"></span>
+
+          <button class="close-btn" onclick="closeModalDirect()">X</button>
+
+        </div>
 
       </div>
 
-      <div style="display:flex;align-items:center;gap:8px;">
+      <div class="modal-body" id="modal-body"></div>
 
-        <span id="modal-badge" class="badge brand"></span>
-
-        <button class="close-btn" onclick="closeModalDirect()">X</button>
-
-      </div>
+      <div class="modal-footer" id="modal-footer"></div>
 
     </div>
 
-    <div class="modal-body"   id="modal-body"></div>
-
-    <div class="modal-footer" id="modal-footer"></div>
-
   </div>
 
-</div>
 
 
-
-<div id="toast-container"></div>
-
+  <div id="toast-container"></div>
 
 
 
 
-<!-- Firebase SDK a MUST load before firebase-config.js -->
 
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <!-- Runtime Environment Config -->
+  <script src="shared/env-config.js"></script>
 
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-
-
-
-<!-- Your Firebase project keys a fill in shared/firebase-config.js -->
-
-<script src="shared/firebase-config.js"></script>
-
-
-
-<!-- Shared utilities -->
-
-<script src="shared/utils.js"></script>
-
-
-
-<!-- Step 4: Socket.IO client -->
-
-<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
-
-
-
-<!-- Step 4: Real-time event handlers -->
-
-<script src="shared/realtime.js"></script>
-
-
-
-<!-- Merchant portal logic -->
-
-<script src="merchant.js"></script>
-
-<script src="shared/chatbot.js"></script>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="shared/firebase-config.js"></script>
+  <script src="shared/utils.js"></script>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script src="shared/realtime.js"></script>
+  <script src="merchant.js"></script>
+  <script src="shared/chatbot.js"></script>
 
 
 
 </body>
 
 </html>
-
-

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -10,7 +10,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'DM Sans', sans-serif; background: #f3f4f6; color: #111827; min-height: 100vh; }
 
-    /* â”€â”€ LOGIN â”€â”€ */
+    /* ─── LOGIN ─── */
     .login-wrap {
       min-height: 100vh; display: flex; align-items: center; justify-content: center;
       background: linear-gradient(135deg, #111827, #1f2937, #374151);
@@ -40,7 +40,7 @@
     }
     .btn-login:hover { background: #1f2937; }
 
-    /* â”€â”€ PANEL â”€â”€ */
+    /* ─── PANEL ─── */
     #admin-panel { display: none; }
     .admin-header {
       background: #111827; color: white; padding: 14px 28px;
@@ -97,9 +97,9 @@
 </head>
 <body class="admin-body">
 
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+<!-- ═════════════════════════════
      LOGIN
-     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+     ═════════════════════════════ -->
 <div id="login-section" class="login-wrap">
   <div class="admin-login-layout">
     <section class="admin-login-showcase">
@@ -144,7 +144,7 @@
 </div>
 
 <!-- ADMIN PANEL
-     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+     ═════════════════════════════ -->
 <div id="admin-panel">
   <div class="admin-shell">
 
@@ -165,31 +165,31 @@
   <!-- Stats Bar -->
   <div class="stats-grid">
     <div class="stat-box">
-      <div class="stat-box-value" id="stat-users">â€”</div>
+      <div class="stat-box-value" id="stat-users">—</div>
       <div class="stat-box-label">Total Users</div>
     </div>
     <div class="stat-box">
-      <div class="stat-box-value" id="stat-sellers">â€”</div>
+      <div class="stat-box-value" id="stat-sellers">—</div>
       <div class="stat-box-label">Sellers</div>
     </div>
     <div class="stat-box">
-      <div class="stat-box-value" id="stat-merchants">â€”</div>
+      <div class="stat-box-value" id="stat-merchants">—</div>
       <div class="stat-box-label">Merchants</div>
     </div>
     <div class="stat-box">
-      <div class="stat-box-value" id="stat-kyc">â€”</div>
+      <div class="stat-box-value" id="stat-kyc">—</div>
       <div class="stat-box-label">KYC Pending</div>
     </div>
     <div class="stat-box">
-      <div class="stat-box-value" id="stat-listings">â€”</div>
+      <div class="stat-box-value" id="stat-listings">—</div>
       <div class="stat-box-label">Listings</div>
     </div>
     <div class="stat-box">
-      <div class="stat-box-value" id="stat-deals">â€”</div>
+      <div class="stat-box-value" id="stat-deals">—</div>
       <div class="stat-box-label">Deals</div>
     </div>
     <div class="stat-box">
-      <div class="stat-box-value" id="stat-revenue">â€”</div>
+      <div class="stat-box-value" id="stat-revenue">—</div>
       <div class="stat-box-label">Revenue (2%)</div>
     </div>
   </div>
@@ -207,7 +207,7 @@
     </button>
   </div>
 
-  <!-- â”€â”€ PANEL BODY â”€â”€ -->
+  <!-- ─── PANEL BODY ─── -->
   <div class="panel-body">
 
     <!-- TRANSPORT TAB -->
@@ -259,6 +259,7 @@
 
 <div id="toast-container"></div>
 
+<script src="env-config.js"></script>
 <script src="admin.js"></script>
 </body>
 </html>

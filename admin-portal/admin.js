@@ -1,17 +1,20 @@
 /**
  * TRADELINK — Admin Portal  (admin-portal/admin.js)
- * Fixed:
- *  1. reads d.requests (not d.rows) — transport requests now show
- *  2. dispatch button shows for status="paid" with payment_status="in_escrow"
- *  3. rich dispatch modal with tracking number + transporter name
- *  4. status update controls when in_transit
  */
 'use strict';
 
-var API_BASE = (window.location.hostname === 'localhost' ||
-                window.location.hostname === '127.0.0.1')
-  ? 'http://localhost:8000/api'
-  : 'https://tradelink-backend-cp06.onrender.com/api';
+var API_BASE = (function() {
+  if (typeof window.ENV_CONFIG !== 'undefined' && window.ENV_CONFIG && window.ENV_CONFIG.BACKEND_URL) {
+    return window.ENV_CONFIG.BACKEND_URL.replace(/\/+$/, '') + '/api';
+  }
+  if (typeof window.API_BASE === 'string' && window.API_BASE) {
+    return window.API_BASE.replace(/\/+$/, '');
+  }
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    return 'http://localhost:8000/api';
+  }
+  return '/api';
+})();
 
 var adminKey = '';
 
@@ -31,13 +34,16 @@ function esc(s) {
   if (!s) return '';
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
+
 function fmtINR(n) {
   return '₹' + Number(n || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 });
 }
+
 function fmtDate(iso) {
   if (!iso) return '—';
   return new Date(iso).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
 }
+
 function toast(msg, type) {
   var host = document.getElementById('toast-container');
   if (!host) {
@@ -51,14 +57,17 @@ function toast(msg, type) {
   host.appendChild(d);
   setTimeout(function() { if (d.parentNode) d.remove(); }, 4500);
 }
+
 function closeModal(id) {
   var el = document.getElementById(id);
   if (el) el.remove();
 }
+
 function adminEmpty(title, body) {
   return '<div class="admin-empty"><strong style="display:block;color:#f8fafc;margin-bottom:8px;">' +
     esc(title) + '</strong><span>' + esc(body || '') + '</span></div>';
 }
+
 function adminField(label, value) {
   return '<div class="admin-field">' +
     '<div class="admin-field-label">' + esc(label) + '</div>' +
@@ -126,7 +135,6 @@ function loadTransportRequests() {
   var url = '/admin/transport/requests' + (filter ? '?status=' + encodeURIComponent(filter) : '');
 
   api('GET', url).then(function(d) {
-    // ── KEY FIX: backend returns "requests" (was "rows") ──
     var reqs = d.requests || d.rows || [];
 
     if (!reqs.length) {
@@ -189,10 +197,6 @@ function renderTransportCard(req) {
     '<div class="admin-card-sub admin-card-meta">Submitted ' + fmtDate(req.created_at) + (req.tracking_number ? ' - Tracking ' + esc(req.tracking_number) : '') + '</div>' +
     '<div class="admin-card-actions">' + actions + '</div>' +
   '</article>';
-}
-
-function _box(label, value) {
-  return adminField(label, esc(String(value)));
 }
 
 /* ─── ACCEPT MODAL ─── */
@@ -411,13 +415,3 @@ function loadUsers() {
     container.innerHTML = html;
   });
 }
-
-
-
-
-
-
-
-
-
-
