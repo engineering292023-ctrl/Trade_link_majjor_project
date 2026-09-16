@@ -1,0 +1,72 @@
+/* TRADELINK — SELLER PORTAL THEME (seller.css) */
+/* Green brand + seller-specific components */
+
+:root {
+  --brand-dark:#0d3d22;--brand-main:#1a6b3a;--brand-mid:#2d9c58;
+  --brand-light:#e8f5ee;--brand-border:#a7f3d0;
+}
+
+/* Login background */
+.seller-bg{background:linear-gradient(135deg,#0d3d22 0%,#1a6b3a 55%,#2d9c58 100%)}
+.seller-bg::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+
+/* Focus ring for green theme */
+.form-control:focus,.login-input:focus{border-color:var(--brand-main);box-shadow:0 0 0 3px rgba(45,156,88,.12)}
+
+/* Bid rows */
+.bid-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--gray-100);cursor:pointer;transition:background .1s;border-radius:0}
+.bid-row:last-child{border-bottom:none}
+.bid-row:hover{background:var(--gray-50);border-radius:var(--r-sm);padding-left:8px;padding-right:8px}
+.bid-rank{font-size:18px;width:26px;flex-shrink:0;text-align:center}
+.bid-info{flex:1}
+.bid-buyer{font-size:14px;font-weight:500;color:var(--gray-900)}
+.bid-meta{font-size:11.5px;color:var(--gray-400);margin-top:2px}
+.bid-amount{text-align:right}
+.bid-price{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--brand-main)}
+.bid-total{font-size:12px;color:var(--gray-400);margin-top:2px}
+
+/* Top bid highlight banner */
+.top-bid-box{background:var(--brand-light);border:1px solid var(--brand-border);border-radius:var(--r);padding:14px 18px;margin-bottom:16px}
+.top-bid-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--brand-main);font-weight:600;margin-bottom:4px}
+.top-bid-price{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:var(--brand-main);line-height:1}
+.top-bid-detail{font-size:13px;color:var(--gray-600);margin-top:4px}
+
+/* Payout balance */
+.payout-balance{font-family:'Syne',sans-serif;font-size:40px;font-weight:800;color:var(--brand-main);line-height:1;margin-bottom:4px}
+.payout-sub{font-size:13px;color:var(--gray-500)}
+
+/* Notification items */
+.notif-item{display:flex;gap:12px;padding:13px 12px;border-radius:var(--r);margin-bottom:6px;font-size:13px;color:var(--gray-700);line-height:1.5;border:1px solid transparent;transition:background .1s}
+.notif-item.unread{background:var(--brand-light);border-color:var(--brand-border)}
+.notif-item:hover{background:var(--gray-50)}
+.notif-dot{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:15px}
+.notif-dot.success{background:var(--success-light)}
+.notif-dot.warning{background:var(--warning-light)}
+.notif-dot.info{background:var(--info-light)}
+.notif-dot.brand{background:var(--brand-light)}
+.notif-dot.danger{background:var(--danger-light)}
+.notif-body{flex:1}
+
+/* Quick action grid */
+.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.quick-card{padding:14px;border-radius:var(--r);border:1px solid var(--gray-200);background:var(--gray-50);cursor:pointer;transition:all .15s}
+.quick-card:hover{border-color:var(--brand-mid);background:var(--brand-light);transform:translateY(-1px);box-shadow:var(--shadow)}
+.quick-icon{font-size:20px;margin-bottom:5px}
+.quick-title{font-size:13px;font-weight:500;color:var(--gray-800)}
+.quick-desc{font-size:11px;color:var(--gray-400);margin-top:2px}
+
+/* Help cards */
+.help-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.help-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--r-lg);padding:22px;cursor:pointer;transition:all .15s;box-shadow:var(--shadow-sm)}
+.help-card:hover{border-color:var(--brand-mid);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.help-card-icon{font-size:28px;margin-bottom:10px}
+.help-card-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:600;color:var(--gray-900);margin-bottom:5px}
+.help-card-desc{font-size:13px;color:var(--gray-500);line-height:1.5}
+
+/* KYC status badge row */
+.kyc-step{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--gray-100)}
+.kyc-step:last-child{border-bottom:none}
+.kyc-step-name{flex:1;font-size:13.5px;color:var(--gray-700)}
+
+@media(max-width:900px){.help-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.help-grid{grid-template-columns:1fr}.login-card{width:95vw;padding:32px 22px}}

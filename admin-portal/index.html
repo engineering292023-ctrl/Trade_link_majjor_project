@@ -1,0 +1,264 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TradeLink - Admin Panel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: #f3f4f6; color: #111827; min-height: 100vh; }
+
+    /* â”€â”€ LOGIN â”€â”€ */
+    .login-wrap {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #111827, #1f2937, #374151);
+    }
+    .login-card {
+      background: white; border-radius: 16px; padding: 40px 36px;
+      width: 380px; box-shadow: 0 20px 60px rgba(0,0,0,.35);
+    }
+    .login-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+    .login-logo {
+      width: 44px; height: 44px; background: #111827; color: white;
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px;
+    }
+    .login-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; }
+    .login-sub { font-size: 12px; color: #6b7280; margin-top: 2px; }
+    .login-card h2 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+    .login-card p { font-size: 13px; color: #6b7280; margin-bottom: 20px; }
+    .login-card input {
+      width: 100%; padding: 12px 14px; border: 1.5px solid #d1d5db;
+      border-radius: 8px; font-size: 14px; margin-bottom: 14px; outline: none;
+    }
+    .login-card input:focus { border-color: #1a6b3a; box-shadow: 0 0 0 3px rgba(26,107,58,.12); }
+    .btn-login {
+      width: 100%; padding: 13px; background: #111827; color: white; border: none;
+      border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;
+    }
+    .btn-login:hover { background: #1f2937; }
+
+    /* â”€â”€ PANEL â”€â”€ */
+    #admin-panel { display: none; }
+    .admin-header {
+      background: #111827; color: white; padding: 14px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .admin-header-brand { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+    .admin-header-badge { background: rgba(255,255,255,.15); padding: 3px 10px; border-radius: 20px; font-size: 12px; }
+
+    /* STATS */
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px; padding: 20px 24px; background: #1f2937;
+    }
+    .stat-box {
+      background: rgba(255,255,255,.07); border-radius: 10px; padding: 14px;
+      text-align: center; color: white;
+    }
+    .stat-box-value { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; }
+    .stat-box-label { font-size: 11px; color: rgba(255,255,255,.6); margin-top: 3px; text-transform: uppercase; letter-spacing: .05em; }
+
+    /* TABS */
+    .tab-bar { display: flex; gap: 0; padding: 0 24px; background: white; border-bottom: 2px solid #e5e7eb; }
+    .tab-btn {
+      padding: 14px 22px; font-size: 14px; font-weight: 500; cursor: pointer;
+      border: none; background: none; color: #6b7280; border-bottom: 2px solid transparent;
+      margin-bottom: -2px; transition: all .15s;
+    }
+    .tab-btn:hover { color: #111827; }
+    .tab-btn.active { color: #1a6b3a; border-bottom-color: #1a6b3a; font-weight: 600; }
+
+    /* CONTENT */
+    .panel-body { padding: 24px; max-width: 1100px; margin: 0 auto; }
+    .tab-panel { display: none; }
+
+    /* FILTER BAR */
+    .filter-bar {
+      display: flex; gap: 10px; align-items: center; margin-bottom: 18px;
+      background: white; padding: 12px 16px; border-radius: 10px; border: 1px solid #e5e7eb;
+    }
+    .filter-bar select, .filter-bar input {
+      padding: 8px 12px; border: 1.5px solid #e5e7eb; border-radius: 8px;
+      font-size: 13px; outline: none; background: white;
+    }
+    .filter-bar select:focus, .filter-bar input:focus { border-color: #1a6b3a; }
+    .btn-refresh {
+      padding: 8px 16px; background: #1a6b3a; color: white; border: none;
+      border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;
+    }
+    .btn-refresh:hover { background: #15803d; }
+
+    #toast-container { position: fixed; top: 16px; right: 16px; z-index: 9999; }
+  </style>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body">
+
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     LOGIN
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<div id="login-section" class="login-wrap">
+  <div class="admin-login-layout">
+    <section class="admin-login-showcase">
+      <div class="admin-eyebrow">Platform oversight</div>
+      <div class="admin-login-title">Review transport, KYC, and platform activity from one control room.</div>
+      <div class="admin-login-copy">
+        Keep approvals, exceptions, and user monitoring in one cleaner admin workspace.
+      </div>
+      <div class="admin-login-grid">
+        <div class="admin-login-note">
+          <span>Transport</span>
+          <strong>Review route requests, confirm dispatch, and follow delivery movement quickly.</strong>
+          <p>Open requests, payment checkpoints, and shipment progress stay easier to scan.</p>
+        </div>
+        <div class="admin-login-note">
+          <span>Compliance</span>
+          <strong>Approve KYC and user reviews without bouncing through mismatched screens.</strong>
+          <p>Identity checks and review decisions remain visible from the same command layer.</p>
+        </div>
+        <div class="admin-login-note">
+          <span>Operations</span>
+          <strong>Track users, listings, and platform health from one high-signal dashboard.</strong>
+          <p>See key stats first, then move directly into the queue that needs attention.</p>
+        </div>
+      </div>
+    </section>
+    <div class="login-card">
+      <div class="login-brand">
+        <div class="login-logo">TL</div>
+        <div>
+          <div class="login-title">TradeLink</div>
+          <div class="login-sub">Admin control room</div>
+        </div>
+      </div>
+      <h2>Admin access</h2>
+      <p>Enter the admin secret key to review transport, compliance, payouts, and user activity.</p>
+      <input type="password" id="admin-key" placeholder="Admin secret key"
+        onkeydown="if(event.key==='Enter') handleAdminLogin()">
+      <button class="btn-login primary" onclick="handleAdminLogin()">Enter admin workspace</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<div id="admin-panel">
+  <div class="admin-shell">
+
+  <!-- Header -->
+  <div class="admin-header">
+    <div class="admin-header-copy">
+      <div class="admin-header-brand">
+        <span class="admin-header-mark">TL</span>
+        <div>
+          <div class="admin-header-title">TradeLink Admin</div>
+          <div class="admin-header-sub">Transport, compliance, and platform oversight</div>
+        </div>
+      </div>
+    </div>
+    <span class="admin-header-badge">Secure Session</span>
+  </div>
+
+  <!-- Stats Bar -->
+  <div class="stats-grid">
+    <div class="stat-box">
+      <div class="stat-box-value" id="stat-users">â€”</div>
+      <div class="stat-box-label">Total Users</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-box-value" id="stat-sellers">â€”</div>
+      <div class="stat-box-label">Sellers</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-box-value" id="stat-merchants">â€”</div>
+      <div class="stat-box-label">Merchants</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-box-value" id="stat-kyc">â€”</div>
+      <div class="stat-box-label">KYC Pending</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-box-value" id="stat-listings">â€”</div>
+      <div class="stat-box-label">Listings</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-box-value" id="stat-deals">â€”</div>
+      <div class="stat-box-label">Deals</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-box-value" id="stat-revenue">â€”</div>
+      <div class="stat-box-label">Revenue (2%)</div>
+    </div>
+  </div>
+
+  <!-- Tab Bar -->
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="transport" onclick="loadTab('transport')">
+      Transport Requests
+    </button>
+    <button class="tab-btn" data-tab="kyc" onclick="loadTab('kyc')">
+      KYC Review
+    </button>
+    <button class="tab-btn" data-tab="users" onclick="loadTab('users')">
+      All Users
+    </button>
+  </div>
+
+  <!-- â”€â”€ PANEL BODY â”€â”€ -->
+  <div class="panel-body">
+
+    <!-- TRANSPORT TAB -->
+    <div class="tab-panel" id="tab-transport" style="display:block;">
+      <div class="filter-bar">
+        <label class="filter-label">Filter by status</label>
+        <select id="transport-filter" onchange="loadTransportRequests()">
+          <option value="">All requests</option>
+          <option value="open">Open - needs action</option>
+          <option value="processed">Accepted - waiting payment</option>
+          <option value="paid">Paid - ready to dispatch</option>
+          <option value="in_transit">In transit</option>
+          <option value="delivered">Delivered</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+        <button class="btn-refresh" onclick="loadTransportRequests()">Refresh</button>
+      </div>
+
+      <div id="transport-list">
+        <div class="admin-loading">Loading transport requests...</div>
+      </div>
+    </div>
+
+    <!-- KYC TAB -->
+    <div class="tab-panel" id="tab-kyc">
+      <div class="filter-bar">
+        <span class="filter-label">Pending KYC submissions</span>
+        <button class="btn-refresh" onclick="loadKYCRequests()">Refresh</button>
+      </div>
+      <div id="kyc-list">
+        <div class="admin-loading">Loading review queue...</div>
+      </div>
+    </div>
+
+    <!-- USERS TAB -->
+    <div class="tab-panel" id="tab-users">
+      <div class="filter-bar">
+        <span class="filter-label">All registered users</span>
+        <button class="btn-refresh" onclick="loadUsers()">Refresh</button>
+      </div>
+      <div id="users-list">
+        <div class="admin-loading">Loading users...</div>
+      </div>
+    </div>
+
+  </div><!-- end panel-body -->
+  </div>
+</div><!-- end admin-panel -->
+
+<div id="toast-container"></div>
+
+<script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+/* TRADELINK — MERCHANT PORTAL THEME (merchant.css) */
+/* Blue brand — buyers/merchants browsing and bidding on listings */
+
+:root {
+  --brand-dark:  #1e3a8a;
+  --brand-main:  #1d4ed8;
+  --brand-mid:   #3b82f6;
+  --brand-light: #eff6ff;
+  --brand-border:#bfdbfe;
+}
+
+/* Login background — blue gradient */
+.merchant-bg {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 55%, #3b82f6 100%);
+}
+.merchant-bg::before {
+  content:'';position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+  pointer-events:none;
+}
+
+/* Blue focus / active overrides */
+.form-control:focus,
+.login-input:focus {
+  border-color: var(--brand-main);
+  box-shadow: 0 0 0 3px rgba(59,130,246,.15);
+}
+
+.btn.primary { background:var(--brand-main); border-color:var(--brand-main); }
+.btn.primary:hover { filter:brightness(.9); }
+
+.nav-item.active .nav-icon { color:var(--brand-mid); }
+.sidebar-logo-icon { background:var(--brand-mid); }
+
+/* Listing cards (marketplace grid) */
+.listing-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
+  gap:18px;
+}
+
+.listing-card {
+  background:var(--white);
+  border:1px solid var(--gray-200);
+  border-radius:var(--r-lg);
+  padding:0;
+  box-shadow:var(--shadow-sm);
+  cursor:pointer;
+  transition:all .18s;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+
+.listing-card:hover {
+  border-color:var(--brand-mid);
+  box-shadow:var(--shadow-md);
+  transform:translateY(-2px);
+}
+
+.listing-card-img {
+  height:150px;
+  background:var(--gray-100);
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:36px;
+  color:var(--gray-300);
+}
+
+.listing-card-img img {
+  width:100%;height:100%;object-fit:cover;
+}
+
+.listing-card-timer {
+  position:absolute;top:10px;right:10px;
+  background:rgba(0,0,0,.55);color:white;
+  font-size:11px;font-weight:600;
+  padding:3px 9px;border-radius:20px;
+  display:flex;align-items:center;gap:4px;
+}
+
+.listing-card-body { padding:16px;flex:1;display:flex;flex-direction:column; }
+
+.listing-card-category {
+  font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--brand-main);font-weight:600;margin-bottom:5px;
+}
+
+.listing-card-title {
+  font-family:'Syne',sans-serif;
+  font-size:15px;font-weight:600;
+  color:var(--gray-900);margin-bottom:4px;line-height:1.3;
+}
+
+.listing-card-seller {
+  font-size:12px;color:var(--gray-400);margin-bottom:10px;
+}
+
+.listing-card-meta {
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:6px;margin-bottom:12px;
+}
+
+.meta-item { font-size:12px;color:var(--gray-600); }
+.meta-item strong { display:block;font-size:13px;color:var(--gray-900); }
+
+.listing-card-footer {
+  border-top:1px solid var(--gray-100);
+  padding:12px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:auto;
+}
+
+.current-bid {
+  font-family:'Syne',sans-serif;
+  font-size:18px;font-weight:700;color:var(--brand-main);
+}
+.bid-label { font-size:10px;color:var(--gray-400);text-transform:uppercase;letter-spacing:.05em; }
+
+/* Bid placement form */
+.bid-form {
+  background:var(--brand-light);
+  border:1.5px solid var(--brand-border);
+  border-radius:var(--r);
+  padding:18px;
+  margin-bottom:16px;
+}
+
+.bid-form-title {
+  font-family:'Syne',sans-serif;
+  font-size:15px;font-weight:600;color:var(--gray-900);margin-bottom:12px;
+}
+
+.bid-input-row {
+  display:flex;gap:10px;align-items:flex-end;
+}
+
+.bid-input-wrap { flex:1; }
+.bid-input-wrap label { font-size:12px;color:var(--gray-600);font-weight:500;display:block;margin-bottom:4px; }
+.bid-input {
+  width:100%;padding:10px 13px;
+  border:1.5px solid var(--brand-border);
+  border-radius:var(--r-sm);font-size:14px;font-weight:600;
+  color:var(--brand-main);
+  outline:none;background:var(--white);
+  transition:border-color .2s;
+}
+.bid-input:focus { border-color:var(--brand-main);box-shadow:0 0 0 3px rgba(59,130,246,.12); }
+
+.bid-calc { font-size:12px;color:var(--gray-500);margin-top:5px; }
+.bid-calc strong { color:var(--gray-900); }
+
+/* My Bids table — color-coded rows */
+.bid-won  { background:#f0fdf4; }
+.bid-outbid{ background:#fef2f2; }
+.bid-live  { background:#eff6ff; }
+
+/* Payment card */
+.pay-card {
+  background:var(--white);
+  border:1.5px solid var(--brand-border);
+  border-radius:var(--r-lg);
+  padding:22px;box-shadow:var(--shadow-sm);
+}
+
+.pay-amount {
+  font-family:'Syne',sans-serif;
+  font-size:34px;font-weight:800;color:var(--brand-main);
+}
+
+/* Escrow badge */
+.escrow-badge {
+  display:inline-flex;align-items:center;gap:6px;
+  background:#fef3c7;color:#92400e;
+  border:1px solid #fde68a;
+  padding:5px 12px;border-radius:20px;font-size:12px;font-weight:500;
+}
+
+/* Marketplace filter bar (category chips) */
+.chip-bar {
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;
+}
+
+.chip {
+  padding:6px 14px;border-radius:20px;font-size:13px;
+  border:1.5px solid var(--gray-200);background:var(--white);
+  cursor:pointer;transition:all .12s;color:var(--gray-600);font-weight:500;
+}
+
+.chip:hover { border-color:var(--brand-mid);color:var(--brand-main); }
+.chip.active { background:var(--brand-main);color:white;border-color:var(--brand-main); }
+
+/* Seller rating stars */
+.stars { color:#f59e0b;font-size:13px; }
+
+/* Help cards — blue version */
+.help-grid {
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+}
+
+.help-card {
+  background:var(--white);border:1px solid var(--gray-200);
+  border-radius:var(--r-lg);padding:22px;cursor:pointer;
+  transition:all .15s;box-shadow:var(--shadow-sm);
+}
+
+.help-card:hover {
+  border-color:var(--brand-mid);
+  box-shadow:var(--shadow-md);transform:translateY(-2px);
+}
+
+.help-card-icon  { font-size:28px;margin-bottom:10px; }
+.help-card-title { font-family:'Syne',sans-serif;font-size:15px;font-weight:600;color:var(--gray-900);margin-bottom:5px; }
+.help-card-desc  { font-size:13px;color:var(--gray-500);line-height:1.5; }
+
+@media(max-width:900px){.help-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.help-grid{grid-template-columns:1fr}.login-card{width:95vw;padding:32px 22px}.listing-grid{grid-template-columns:1fr}}
